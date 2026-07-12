@@ -34,7 +34,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; color: var(--ink); background: var(--white); overflow-x: hidden; }
 a { text-decoration: none; color: inherit; }
-
 /* NAV */
 nav {
   position: sticky; top: 0; z-index: 100;
@@ -52,7 +51,6 @@ nav {
 .nav-links a { color: var(--sage); font-size: .82rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; transition: color .2s; }
 .nav-links a:hover { color: var(--amber); }
 .nav-tag { background: var(--gold); color: var(--ink); font-family: 'Syne', sans-serif; font-size: .7rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; letter-spacing: .06em; }
-
 /* HERO */
 .hero { background: var(--forest); padding: 64px 32px 72px; position: relative; overflow: hidden; }
 .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 320px; height: 320px; border-radius: 50%; background: rgba(201,136,42,.1); pointer-events: none; }
@@ -67,14 +65,12 @@ nav {
 .btn-primary:hover { background: var(--amber); transform: translateY(-1px); }
 .btn-ghost { background: transparent; color: var(--white); font-family: 'Syne', sans-serif; font-weight: 600; font-size: .88rem; padding: 10px 22px; border-radius: 8px; border: 1.5px solid rgba(255,255,255,.3); cursor: pointer; transition: all .2s; display: inline-block; }
 .btn-ghost:hover { border-color: var(--sage); color: var(--sage); }
-
 /* STATS PANEL */
 .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .stat-box { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 18px 20px; }
 .stat-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--amber); line-height: 1; margin-bottom: 4px; }
 .stat-label { font-size: .72rem; font-weight: 500; color: var(--sage); letter-spacing: .06em; text-transform: uppercase; }
 #statTotal, #statCampaigns { color: var(--amber); }
-
 /* STAT BAR */
 .stat-bar { background: var(--ink); border-top: 2px solid var(--gold); }
 .stat-bar-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-around; flex-wrap: wrap; }
@@ -82,7 +78,6 @@ nav {
 .sbi-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--amber); line-height: 1; }
 .sbi-label { font-size: .68rem; font-weight: 500; color: var(--grey3); letter-spacing: .07em; text-transform: uppercase; text-align: center; }
 .sbi-divider { width: 1px; background: rgba(255,255,255,.08); margin: 14px 0; align-self: stretch; }
-
 /* SEARCH SECTION */
 .search-section { background: var(--mist); padding: 44px 32px; border-bottom: 1px solid var(--grey2); }
 .search-section-inner { max-width: 1100px; margin: 0 auto; }
@@ -102,7 +97,6 @@ nav {
 .chip.active { background: var(--forest); border-color: var(--forest); color: var(--white); }
 .fselect { background: var(--white); border: 1.5px solid var(--grey2); color: var(--grey4); font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 500; padding: 5px 13px; border-radius: 20px; cursor: pointer; outline: none; transition: border-color .2s; }
 .fselect:focus { border-color: var(--leaf); }
-
 /* RESULTS META */
 .results-meta { max-width: 1100px; margin: 0 auto; padding: 18px 32px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
 .results-count { font-size: .82rem; color: var(--grey4); }
@@ -110,12 +104,10 @@ nav {
 .view-toggle { display: flex; gap: 4px; }
 .view-btn { background: none; border: 1.5px solid var(--grey2); color: var(--grey3); padding: 5px 9px; border-radius: 6px; cursor: pointer; font-size: .82rem; transition: all .15s; }
 .view-btn.active { background: var(--forest); border-color: var(--forest); color: var(--white); }
-
 /* LOADING */
 .loading { text-align: center; padding: 48px; color: var(--grey3); font-size: .9rem; }
 .spinner { width: 36px; height: 36px; border: 3px solid var(--grey2); border-top-color: var(--canopy); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 12px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
 /* CARDS */
 #cardsContainer { max-width: 1100px; margin: 0 auto; padding: 20px 32px 48px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
 #cardsContainer.list-view { grid-template-columns: 1fr; }
@@ -137,12 +129,10 @@ nav {
 .card-campaign { font-size: .68rem; font-weight: 600; color: var(--canopy); letter-spacing: .04em; text-transform: uppercase; }
 .card-link { font-size: .75rem; font-weight: 600; color: var(--teal); display: flex; align-items: center; gap: 3px; transition: color .15s; }
 .card-link:hover { color: var(--forest); }
-
 /* EMPTY STATE */
 #emptyState { display: none; grid-column: 1/-1; text-align: center; padding: 56px 20px; }
 #emptyState .ei { font-size: 2.5rem; margin-bottom: 10px; }
 #emptyState p { color: var(--grey4); font-size: .9rem; }
-
 /* CAMPAIGNS */
 .campaigns-section { background: var(--sand); padding: 52px 32px; border-top: 1px solid var(--grey2); }
 .campaigns-inner { max-width: 1100px; margin: 0 auto; }
@@ -154,7 +144,6 @@ nav {
 .camp-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .82rem; color: var(--forest); line-height: 1.3; }
 .camp-count { font-size: .72rem; color: var(--grey4); }
 .camp-count span { font-weight: 700; color: var(--canopy); }
-
 /* SKILL PATHS */
 .paths-section { padding: 52px 32px; border-top: 1px solid var(--grey2); }
 .paths-inner { max-width: 1100px; margin: 0 auto; }
@@ -179,7 +168,6 @@ nav {
 .intermediate .path-btn { background: var(--gold); color: var(--ink); }
 .advanced .path-btn     { background: var(--purple); color: var(--white); }
 .path-btn:hover { opacity: .85; transform: translateX(2px); }
-
 /* PROJECTS BAR */
 .projects-section { background: var(--forest); padding: 36px 32px; }
 .projects-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
@@ -190,7 +178,6 @@ nav {
 .proj-pill:hover, .proj-pill.active { background: var(--gold); border-color: var(--gold); color: var(--ink); }
 .pill-count { background: rgba(255,255,255,.15); border-radius: 20px; font-size: .66rem; font-weight: 700; padding: 1px 6px; }
 .proj-pill.active .pill-count { background: rgba(0,0,0,.15); }
-
 /* SPARQL INFO */
 .sparql-section { background: var(--grey1); padding: 40px 32px; border-top: 1px solid var(--grey2); }
 .sparql-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
@@ -199,13 +186,11 @@ nav {
 .sparql-link { display: inline-flex; align-items: center; gap: 6px; background: var(--forest); color: var(--white); font-family: 'Syne', sans-serif; font-weight: 600; font-size: .84rem; padding: 10px 18px; border-radius: 8px; transition: background .2s; }
 .sparql-link:hover { background: var(--canopy); }
 pre.sparql-code { background: #1E1E1E; color: #A7F3D0; font-family: 'Courier New', monospace; font-size: .75rem; padding: 18px; border-radius: 10px; overflow-x: auto; line-height: 1.6; }
-
 /* FOOTER */
 footer { background: var(--ink); color: var(--grey3); padding: 28px 32px; text-align: center; font-size: .78rem; line-height: 1.9; }
 footer a { color: var(--sage); }
 footer a:hover { color: var(--amber); }
 footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
-
 @media (max-width: 860px) {
   .hero-inner { grid-template-columns: 1fr; }
   .hero-stats { display: none; }
@@ -218,7 +203,6 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
 </style>
 </head>
 <body>
-
 <!-- NAV -->
 <nav>
   <div class="nav-brand"><span>◆</span> Wiki In Africa <span style="color:var(--sage);font-weight:400"> · Wikibase</span></div>
@@ -231,7 +215,6 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
   </ul>
   <span class="nav-tag">WIKIBASE</span>
 </nav>
-
 <!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
@@ -246,13 +229,12 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
     </div>
     <div class="hero-stats">
       <div class="stat-box"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total Resources</div></div>
-      <div class="stat-box"><div class="stat-num">9</div><div class="stat-label">Campaigns</div></div>
-      <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">Projects</div></div>
+      <div class="stat-box"><div class="stat-num" id="statCampaigns">—</div><div class="stat-label">Campaigns</div></div>
+      <div class="stat-box"><div class="stat-num" id="statProjects">—</div><div class="stat-label">Projects</div></div>
       <div class="stat-box"><div class="stat-num">100%</div><div class="stat-label">Free & Open</div></div>
     </div>
   </div>
 </div>
-
 <!-- STAT BAR -->
 <div class="stat-bar">
   <div class="stat-bar-inner">
@@ -269,7 +251,6 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
     <div class="sbi"><div class="sbi-num" id="sbReviewed">—</div><div class="sbi-label">Reviewed</div></div>
   </div>
 </div>
-
 <!-- SEARCH -->
 <div class="search-section" id="resources">
   <div class="search-section-inner">
@@ -310,7 +291,6 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
     </div>
   </div>
 </div>
-
 <!-- RESULTS META -->
 <div class="results-meta">
   <div class="results-count">Showing <strong id="resultCount">—</strong> resources</div>
@@ -319,13 +299,11 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
     <button class="view-btn" id="listBtn" title="List">☰</button>
   </div>
 </div>
-
 <!-- CARDS -->
 <div id="cardsContainer">
   <div class="loading"><div class="spinner"></div>Loading resources from Wikibase…</div>
   <div id="emptyState"><div class="ei">🔎</div><p>No resources match your search.<br>Try different terms or clear the filters.</p></div>
 </div>
-
 <!-- CAMPAIGNS -->
 <div class="campaigns-section" id="campaigns">
   <div class="campaigns-inner">
@@ -334,7 +312,6 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
     <div class="camps-grid" id="campsGrid"></div>
   </div>
 </div>
-
 <!-- LEARNING PATHS -->
 <div class="paths-section" id="paths">
   <div class="paths-inner">
@@ -363,7 +340,6 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
     </div>
   </div>
 </div>
-
 <!-- PROJECTS -->
 <div class="projects-section">
   <div class="projects-inner">
@@ -374,7 +350,6 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
     <div class="proj-pills" id="projPills"></div>
   </div>
 </div>
-
 <!-- SPARQL -->
 <div class="sparql-section">
   <div class="sparql-inner">
@@ -387,19 +362,21 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
 PREFIX wdt: &lt;https://wikiinafrica.wikibase.cloud/prop/direct/&gt;
 PREFIX wikibase: &lt;http://wikiba.se/ontology#&gt;
 PREFIX bd:  &lt;http://www.bigdata.com/rdf#&gt;
-
-SELECT ?item ?itemLabel ?skillLabel
+SELECT ?item ?itemLabel ?creators
 WHERE {
   ?item wdt:P2 wd:Q4 .
-  OPTIONAL { ?item wdt:P4 ?skill . }
+  OPTIONAL {
+    SELECT ?item (GROUP_CONCAT(DISTINCT ?c; separator=" & ") AS ?creators)
+    WHERE { ?item wdt:P8 ?c . }
+    GROUP BY ?item
+  }
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en" .
   }
 }
-ORDER BY ?skillLabel</pre>
+ORDER BY ?itemLabel</pre>
   </div>
 </div>
-
 <!-- FOOTER -->
 <footer>
   <strong>Wiki In Africa · Learning Resources Wikibase</strong><br>
@@ -409,7 +386,6 @@ ORDER BY ?skillLabel</pre>
   <a href="https://wikiinafrica.wikibase.cloud" target="_blank">Wikibase</a><br>
   <span style="opacity:.5;font-size:.7rem;">Data served live from wikiinafrica.wikibase.cloud</span>
 </footer>
-
 <script>
 // ── CONFIG ────────────────────────────────────────────────────
 const SPARQL = "https://wikiinafrica.wikibase.cloud/query/sparql";
@@ -417,8 +393,8 @@ const PFX = `
 PREFIX wd:  <https://wikiinafrica.wikibase.cloud/entity/>
 PREFIX wdt: <https://wikiinafrica.wikibase.cloud/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
-PREFIX bd:  <http://www.bigdata.com/rdf#>`;
-
+PREFIX bd:  <http://www.bigdata.com/rdf#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>`;
 const CAMP_META = {
   Q4:  { name:"Wiki Loves Africa",          icon:"📸", color:"#256840" },
   Q7:  { name:"Wiki Loves Women",           icon:"♀️",  color:"#B84A2A" },
@@ -430,13 +406,11 @@ const CAMP_META = {
   Q12: { name:"WikiAfrica Heritage",        icon:"🏛️",  color:"#7C2D12" },
   Q8:  { name:"Cross-Cutting",              icon:"🔗", color:"#374151" },
 };
-
 const SKILL_META = {
   Q26: "Beginner",
   Q27: "Intermediate",
   Q28: "Advanced",
 };
-
 // ── STATE ─────────────────────────────────────────────────────
 let allMaterials = [];
 let activeSkill    = "all";
@@ -445,7 +419,6 @@ let activeFormat   = "all";
 let activeProject  = "all";
 let searchQ        = "";
 let isListView     = false;
-
 // ── SPARQL FETCH ──────────────────────────────────────────────
 async function sparql(query) {
   const url = SPARQL + "?query=" + encodeURIComponent(PFX + "\n" + query) + "&format=json";
@@ -454,88 +427,123 @@ async function sparql(query) {
   const d = await r.json();
   return d.results.bindings;
 }
-
 function val(binding, key) {
   return binding[key] ? binding[key].value : "";
 }
-
 // ── LOAD ALL MATERIALS ────────────────────────────────────────
+// FIX: creator (P8) is aggregated via a nested GROUP_CONCAT subquery so that
+// items with multiple creator statements (e.g. co-authored materials) return
+// exactly one row instead of one row per creator, which was causing the
+// duplicate cards seen in the UI.
+function splitList(str, sep) {
+  return str ? str.split(sep).filter(Boolean) : [];
+}
+// FIX: EVERY multi-valued property (campaign, skill, format, project, topic,
+// creator, url, year, review) is now aggregated with GROUP_CONCAT inside a
+// single nested subquery, GROUP BY ?item. That guarantees exactly one row
+// per item no matter how many statements any of those properties hold —
+// which is what was still causing duplicate cards after only fixing creator
+// (some items also carry more than one format/project/skill/etc. value).
 async function loadMaterials() {
-  // Simplest possible query — one property per OPTIONAL, label service last
-  // Deduplication handled entirely in JavaScript after fetch
   const q = `
-SELECT ?item ?itemLabel ?campQ ?campLabel ?skillQ ?skillLabel
-       ?formatLabel ?topic ?creator ?url ?year ?reviewLabel
+SELECT ?item ?itemLabel
+       ?campQs ?camps ?skillQs ?skills ?formatQs ?formats
+       ?projQs ?projects ?topics ?creators ?urls ?years ?reviews
 WHERE {
-  ?item wdt:P2 ?campQ .
-  FILTER(?campQ IN (wd:Q4,wd:Q5,wd:Q6,wd:Q7,wd:Q8,wd:Q9,wd:Q10,wd:Q11,wd:Q12))
-  OPTIONAL { ?item wdt:P4  ?skillQ  . }
-  OPTIONAL { ?item wdt:P6  ?format  . BIND(STR(?format) AS ?formatLabel) }
-  OPTIONAL { ?item wdt:P10 ?topic   . }
-  OPTIONAL { ?item wdt:P8  ?creator . }
-  OPTIONAL { ?item wdt:P1  ?url     . }
-  OPTIONAL { ?item wdt:P9  ?year    . }
-  OPTIONAL { ?item wdt:P11 ?reviewQ . }
+  {
+    SELECT DISTINCT ?item WHERE {
+      ?item wdt:P2 ?anyCamp .
+      FILTER(?anyCamp IN (wd:Q4,wd:Q5,wd:Q6,wd:Q7,wd:Q8,wd:Q9,wd:Q10,wd:Q11,wd:Q12))
+    }
+  }
+  OPTIONAL {
+    SELECT ?item
+      (GROUP_CONCAT(DISTINCT ?campQ;    separator="|")  AS ?campQs)
+      (GROUP_CONCAT(DISTINCT ?campLbl;  separator=" | ") AS ?camps)
+      (GROUP_CONCAT(DISTINCT ?skillQ;   separator="|")  AS ?skillQs)
+      (GROUP_CONCAT(DISTINCT ?skillLbl; separator=" | ") AS ?skills)
+      (GROUP_CONCAT(DISTINCT ?formatQ;   separator="|")  AS ?formatQs)
+      (GROUP_CONCAT(DISTINCT ?formatLbl; separator=" | ") AS ?formats)
+      (GROUP_CONCAT(DISTINCT ?projQ;    separator="|")  AS ?projQs)
+      (GROUP_CONCAT(DISTINCT ?projLbl;  separator=" | ") AS ?projects)
+      (GROUP_CONCAT(DISTINCT ?topicVal;   separator=" | ") AS ?topics)
+      (GROUP_CONCAT(DISTINCT ?creatorVal; separator=" & ") AS ?creators)
+      (GROUP_CONCAT(DISTINCT ?urlVal;     separator=" | ") AS ?urls)
+      (GROUP_CONCAT(DISTINCT ?yearVal;    separator=" | ") AS ?years)
+      (GROUP_CONCAT(DISTINCT ?reviewLbl;  separator=" | ") AS ?reviews)
+    WHERE {
+      OPTIONAL { ?item wdt:P2  ?campQ .   ?campQ   rdfs:label ?campLbl   . FILTER(LANG(?campLbl)="en") }
+      OPTIONAL { ?item wdt:P4  ?skillQ .  ?skillQ  rdfs:label ?skillLbl  . FILTER(LANG(?skillLbl)="en") }
+      OPTIONAL { ?item wdt:P6  ?formatQ . ?formatQ rdfs:label ?formatLbl . FILTER(LANG(?formatLbl)="en") }
+      OPTIONAL { ?item wdt:P3  ?projQ .   ?projQ   rdfs:label ?projLbl   . FILTER(LANG(?projLbl)="en") }
+      OPTIONAL { ?item wdt:P10 ?topicVal . }
+      OPTIONAL { ?item wdt:P8  ?creatorVal . }
+      OPTIONAL { ?item wdt:P1  ?urlVal . }
+      OPTIONAL { ?item wdt:P9  ?yearVal . }
+      OPTIONAL { ?item wdt:P11 ?reviewQ . ?reviewQ rdfs:label ?reviewLbl . FILTER(LANG(?reviewLbl)="en") }
+    }
+    GROUP BY ?item
+  }
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en" .
   }
-}`;
-
-  const rows = await sparql(q);
-
-  // Deduplicate in JavaScript — keep first occurrence of each item URL
-  const seen = new Set();
-  const unique = [];
-  for (const r of rows) {
-    const itemUrl = val(r, "item");
-    if (!seen.has(itemUrl)) {
-      seen.add(itemUrl);
-      unique.push(r);
-    }
-  }
-
-  return unique.map(r => ({
-    id:       val(r,"item").split("/").pop(),
-    url_item: val(r,"item"),
-    title:    val(r,"itemLabel"),
-    campQ:    val(r,"campQ").split("/").pop(),
-    camp:     val(r,"campLabel"),
-    skillQ:   val(r,"skillQ") ? val(r,"skillQ").split("/").pop() : "",
-    skill:    val(r,"skillLabel"),
-    formatQ:  "",
-    format:   val(r,"formatLabel"),
-    projQ:    "",
-    proj:     "",
-    topic:    val(r,"topic"),
-    creator:  val(r,"creator"),
-    url:      val(r,"url"),
-    year:     val(r,"year") ? val(r,"year").substring(0,4) : "",
-    review:   val(r,"reviewLabel"),
-  }));
-
 }
-
+ORDER BY ?itemLabel`;
+  const rows = await sparql(q);
+  return rows.map(r => {
+    const campQs   = splitList(val(r,"campQs"), "|").map(u => u.split("/").pop());
+    const camps    = splitList(val(r,"camps"), " | ");
+    const skillQs  = splitList(val(r,"skillQs"), "|").map(u => u.split("/").pop());
+    const skills   = splitList(val(r,"skills"), " | ");
+    const formatQs = splitList(val(r,"formatQs"), "|").map(u => u.split("/").pop());
+    const formats  = splitList(val(r,"formats"), " | ");
+    const projQs   = splitList(val(r,"projQs"), "|").map(u => u.split("/").pop());
+    const projects = splitList(val(r,"projects"), " | ");
+    const years    = splitList(val(r,"years"), " | ");
+    const reviews  = splitList(val(r,"reviews"), " | ");
+    const urls     = splitList(val(r,"urls"), " | ");
+    return {
+      id:       val(r,"item").split("/").pop(),
+      url_item: val(r,"item"),
+      title:    val(r,"itemLabel"),
+      campQ:    campQs[0] || "",
+      camp:     camps[0] || "",
+      campQs, camps,
+      skillQ:   skillQs[0] || "",
+      skill:    skills[0] || "",
+      skillQs, skills,
+      formatQ:  formatQs[0] || "",
+      format:   formats[0] || "",
+      formatQs, formats,
+      projQ:    projQs[0] || "",
+      proj:     projects[0] || "",
+      projQs, projects,
+      topic:    val(r,"topics"),
+      creator:  val(r,"creators"),
+      url:      urls[0] || "",
+      year:     (years[0] || "").substring(0,4),
+      review:   reviews[0] || "",
+    };
+  });
+}
 // ── RENDER CARDS ──────────────────────────────────────────────
 function getFiltered() {
   const q = searchQ.toLowerCase();
   return allMaterials.filter(m => {
-    if (activeSkill    !== "all" && m.skillQ    !== activeSkill)    return false;
-    if (activeCampaign !== "all" && m.campQ     !== activeCampaign) return false;
-    if (activeFormat   !== "all" && m.format    !== activeFormat)   return false;
-    if (activeProject  !== "all" && !m.projects?.includes(activeProject)) return false;
-    if (q && ![m.title,m.topic,m.creator,m.format,m.camp,m.skill].join(" ").toLowerCase().includes(q)) return false;
+    if (activeSkill    !== "all" && !m.skillQs.includes(activeSkill))    return false;
+    if (activeCampaign !== "all" && !m.campQs.includes(activeCampaign))  return false;
+    if (activeFormat   !== "all" && !m.formats.includes(activeFormat))   return false;
+    if (activeProject  !== "all" && !m.projects.includes(activeProject)) return false;
+    if (q && ![m.title,m.topic,m.creator,m.formats.join(" "),m.camp,m.skills.join(" ")].join(" ").toLowerCase().includes(q)) return false;
     return true;
   });
 }
-
 function renderCards() {
   const container = document.getElementById("cardsContainer");
   container.querySelectorAll(".card").forEach(c => c.remove());
-
   const filtered = getFiltered();
   document.getElementById("resultCount").textContent = filtered.length;
   document.getElementById("emptyState").style.display = filtered.length === 0 ? "block" : "none";
-
   filtered.forEach((m, i) => {
     const meta = CAMP_META[m.campQ] || {};
     const color = meta.color || "#256840";
@@ -560,13 +568,11 @@ function renderCards() {
     container.appendChild(card);
   });
 }
-
 // ── RENDER CAMPAIGNS ─────────────────────────────────────────
 function renderCampaigns() {
   const grid = document.getElementById("campsGrid");
   const counts = {};
-  allMaterials.forEach(m => counts[m.campQ] = (counts[m.campQ]||0) + 1);
-
+  allMaterials.forEach(m => m.campQs.forEach(cq => counts[cq] = (counts[cq]||0) + 1));
   Object.entries(CAMP_META).forEach(([q, meta]) => {
     const div = document.createElement("div");
     div.className = "camp-card";
@@ -590,20 +596,15 @@ function renderCampaigns() {
     grid.appendChild(div);
   });
 }
-
 // ── RENDER PROJECT PILLS ──────────────────────────────────────
 function renderProjectPills() {
   const counts = {};
-  allMaterials.forEach(m => {
-    if (m.format) counts[m.format] = (counts[m.format]||0)+1;
-  });
-  // Use projects from data — here showing format as proxy
+  allMaterials.forEach(m => m.projects.forEach(p => counts[p] = (counts[p]||0)+1));
   const pills = document.getElementById("projPills");
-  const projects = ["Wikipedia","Wikimedia Commons","Wikidata","Wikiquote","WikiFundi Platform"];
-  projects.forEach(p => {
+  Object.keys(counts).sort((a,b) => counts[b]-counts[a]).forEach(p => {
     const btn = document.createElement("button");
     btn.className = "proj-pill";
-    btn.innerHTML = `${p} <span class="pill-count">—</span>`;
+    btn.innerHTML = `${p} <span class="pill-count">${counts[p]}</span>`;
     btn.addEventListener("click", () => {
       document.querySelectorAll(".proj-pill").forEach(x => x.classList.remove("active"));
       if (activeProject === p) { activeProject = "all"; }
@@ -614,28 +615,33 @@ function renderProjectPills() {
     pills.appendChild(btn);
   });
 }
-
 // ── STAT BAR COUNTS ──────────────────────────────────────────
 function updateStats() {
   const total = allMaterials.length;
-  const beg   = allMaterials.filter(m => m.skillQ === "Q26").length;
-  const int_  = allMaterials.filter(m => m.skillQ === "Q27").length;
-  const adv   = allMaterials.filter(m => m.skillQ === "Q28").length;
-  const wla   = allMaterials.filter(m => m.campQ  === "Q4").length;
+  const beg   = allMaterials.filter(m => m.skillQs.includes("Q26")).length;
+  const int_  = allMaterials.filter(m => m.skillQs.includes("Q27")).length;
+  const adv   = allMaterials.filter(m => m.skillQs.includes("Q28")).length;
+  const wla   = allMaterials.filter(m => m.campQs.includes("Q4")).length;
   const rev   = allMaterials.filter(m => m.review === "Reviewed").length;
-
-  document.getElementById("statTotal").textContent  = total;
-  document.getElementById("sbTotal").textContent     = total;
-  document.getElementById("sbBeginner").textContent  = beg;
+  // Live campaign count — only campaigns that actually have resources
+  const activeCamps = new Set(allMaterials.flatMap(m => m.campQs).filter(Boolean));
+  const campCount   = activeCamps.size;
+  // Live project count — distinct projects across all materials
+  const activeProjs = new Set(allMaterials.flatMap(m => m.projQs).filter(Boolean));
+  const projCount   = activeProjs.size;
+  document.getElementById("statTotal").textContent      = total;
+  document.getElementById("statCampaigns").textContent  = campCount;
+  document.getElementById("statProjects").textContent   = projCount || "—";
+  document.getElementById("sbTotal").textContent        = total;
+  document.getElementById("sbBeginner").textContent     = beg;
   document.getElementById("sbIntermediate").textContent = int_;
-  document.getElementById("sbAdvanced").textContent  = adv;
-  document.getElementById("sbWLA").textContent       = wla;
-  document.getElementById("sbReviewed").textContent  = rev;
-  document.getElementById("pathBeg").textContent     = beg;
-  document.getElementById("pathInt").textContent     = int_;
-  document.getElementById("pathAdv").textContent     = adv;
+  document.getElementById("sbAdvanced").textContent     = adv;
+  document.getElementById("sbWLA").textContent          = wla;
+  document.getElementById("sbReviewed").textContent     = rev;
+  document.getElementById("pathBeg").textContent        = beg;
+  document.getElementById("pathInt").textContent        = int_;
+  document.getElementById("pathAdv").textContent        = adv;
 }
-
 // ── SKILL FILTER (from path buttons) ─────────────────────────
 function filterSkill(q) {
   activeSkill = q;
@@ -643,7 +649,6 @@ function filterSkill(q) {
   renderCards();
   document.getElementById("resources").scrollIntoView({behavior:"smooth"});
 }
-
 // ── EVENT LISTENERS ───────────────────────────────────────────
 document.getElementById("searchInput").addEventListener("input", e => {
   searchQ = e.target.value;
@@ -678,7 +683,6 @@ document.getElementById("listBtn").addEventListener("click", () => {
   document.getElementById("listBtn").classList.add("active");
   document.getElementById("gridBtn").classList.remove("active");
 });
-
 // ── INIT ──────────────────────────────────────────────────────
 (async () => {
   try {
