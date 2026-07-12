@@ -452,7 +452,7 @@ async function loadMaterials() {
   const q = `
 SELECT ?item ?itemLabel ?campQ ?campLabel
        ?skillQs ?skills ?formats ?projQs ?projects
-       ?langQs ?languages ?topics ?creators ?urls ?years ?reviews
+       ?languages ?topics ?creators ?urls ?years ?reviews
 WHERE {
   ?item wdt:P2 ?campQ .
   FILTER(?campQ IN (wd:Q4,wd:Q5,wd:Q6,wd:Q7,wd:Q8,wd:Q9,wd:Q10,wd:Q11,wd:Q12))
@@ -477,10 +477,12 @@ WHERE {
     GROUP BY ?item
   }
   OPTIONAL {
-    SELECT ?item
-      (GROUP_CONCAT(DISTINCT ?langQ;   separator="|")  AS ?langQs)
-      (GROUP_CONCAT(DISTINCT ?langLbl; separator=" | ") AS ?languages)
-    WHERE { ?item wdt:P7 ?langQ . ?langQ rdfs:label ?langLbl . FILTER(LANG(?langLbl)="en") }
+    SELECT ?item (GROUP_CONCAT(DISTINCT ?langDisplay; separator=" | ") AS ?languages)
+    WHERE {
+      ?item wdt:P7 ?langVal .
+      OPTIONAL { ?langVal rdfs:label ?langLbl . FILTER(LANG(?langLbl)="en") }
+      BIND(COALESCE(?langLbl, ?langVal) AS ?langDisplay)
+    }
     GROUP BY ?item
   }
   OPTIONAL {
@@ -521,7 +523,6 @@ ORDER BY ?campLabel ?itemLabel`;
     const formats  = splitList(val(r,"formats"), " | ");
     const projQs   = splitList(val(r,"projQs"), "|").map(u => u.split("/").pop());
     const projects = splitList(val(r,"projects"), " | ");
-    const langQs   = splitList(val(r,"langQs"), "|").map(u => u.split("/").pop());
     const languages = splitList(val(r,"languages"), " | ");
     const years    = splitList(val(r,"years"), " | ");
     const reviews  = splitList(val(r,"reviews"), " | ");
@@ -540,9 +541,8 @@ ORDER BY ?campLabel ?itemLabel`;
       projQ:    projQs[0] || "",
       proj:     projects[0] || "",
       projQs, projects,
-      langQ:    langQs[0] || "",
       lang:     languages[0] || "",
-      langQs, languages,
+      languages,
       topic:    val(r,"topics"),
       creator:  val(r,"creators"),
       url:      urls[0] || "",
