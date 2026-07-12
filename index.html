@@ -463,27 +463,26 @@ function val(binding, key) {
 async function loadMaterials() {
   const q = `
 SELECT ?item ?itemLabel ?campQ ?campLabel ?skillQ ?skillLabel
-       ?formatQ ?formatLabel ?projQ ?projLabel ?topic ?creator ?url ?year ?reviewQ ?reviewLabel
+       ?formatQ ?formatLabel ?projQ ?projLabel ?url ?year ?reviewQ ?reviewLabel
+       (GROUP_CONCAT(DISTINCT ?topic;   separator=", ") AS ?topic)
+       (GROUP_CONCAT(DISTINCT ?creator; separator=", ") AS ?creator)
 WHERE {
-  {
-    SELECT DISTINCT ?item ?campQ ?skillQ ?formatQ ?projQ ?topic ?creator ?url ?year ?reviewQ
-    WHERE {
-      ?item wdt:P2 ?campQ .
-      FILTER(?campQ IN (wd:Q4,wd:Q5,wd:Q6,wd:Q7,wd:Q8,wd:Q9,wd:Q10,wd:Q11,wd:Q12))
-      OPTIONAL { ?item wdt:P4  ?skillQ  . }
-      OPTIONAL { ?item wdt:P6  ?formatQ . }
-      OPTIONAL { ?item wdt:P3  ?projQ   . }
-      OPTIONAL { ?item wdt:P10 ?topic   . }
-      OPTIONAL { ?item wdt:P8  ?creator . }
-      OPTIONAL { ?item wdt:P1  ?url     . }
-      OPTIONAL { ?item wdt:P9  ?year    . }
-      OPTIONAL { ?item wdt:P11 ?reviewQ . }
-    }
-  }
+  ?item wdt:P2 ?campQ .
+  FILTER(?campQ IN (wd:Q4,wd:Q5,wd:Q6,wd:Q7,wd:Q8,wd:Q9,wd:Q10,wd:Q11,wd:Q12))
+  OPTIONAL { ?item wdt:P4  ?skillQ  . }
+  OPTIONAL { ?item wdt:P6  ?formatQ . }
+  OPTIONAL { ?item wdt:P3  ?projQ   . }
+  OPTIONAL { ?item wdt:P10 ?topic   . }
+  OPTIONAL { ?item wdt:P8  ?creator . }
+  OPTIONAL { ?item wdt:P1  ?url     . }
+  OPTIONAL { ?item wdt:P9  ?year    . }
+  OPTIONAL { ?item wdt:P11 ?reviewQ . }
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en" .
   }
 }
+GROUP BY ?item ?itemLabel ?campQ ?campLabel ?skillQ ?skillLabel
+         ?formatQ ?formatLabel ?projQ ?projLabel ?url ?year ?reviewQ ?reviewLabel
 ORDER BY ?campLabel ?skillLabel ?itemLabel`;
 
   const rows = await sparql(q);
@@ -497,7 +496,7 @@ ORDER BY ?campLabel ?skillLabel ?itemLabel`;
     skill:    val(r,"skillLabel"),
     formatQ:  val(r,"formatQ").split("/").pop(),
     format:   val(r,"formatLabel"),
-    projQ:    val(r,"projQ").split("/").pop(),
+    projQ:    val(r,"projQ") ? val(r,"projQ").split("/").pop() : "",
     proj:     val(r,"projLabel"),
     topic:    val(r,"topic"),
     creator:  val(r,"creator"),
@@ -616,26 +615,22 @@ function updateStats() {
   const wla   = allMaterials.filter(m => m.campQ  === "Q4").length;
   const rev   = allMaterials.filter(m => m.review === "Reviewed").length;
 
-  // Live campaign count — only campaigns that actually have resources
+  // Live counts — only campaigns/projects that actually have resources
   const activeCamps = new Set(allMaterials.map(m => m.campQ).filter(Boolean));
-  const campCount   = activeCamps.size;
-
-  // Live project count — distinct projects across all materials
   const activeProjs = new Set(allMaterials.map(m => m.projQ).filter(Boolean));
-  const projCount   = activeProjs.size;
 
-  document.getElementById("statTotal").textContent      = total;
-  document.getElementById("statCampaigns").textContent  = campCount;
-  document.getElementById("statProjects").textContent   = projCount || "—";
-  document.getElementById("sbTotal").textContent        = total;
-  document.getElementById("sbBeginner").textContent     = beg;
-  document.getElementById("sbIntermediate").textContent = int_;
-  document.getElementById("sbAdvanced").textContent     = adv;
-  document.getElementById("sbWLA").textContent          = wla;
-  document.getElementById("sbReviewed").textContent     = rev;
-  document.getElementById("pathBeg").textContent        = beg;
-  document.getElementById("pathInt").textContent        = int_;
-  document.getElementById("pathAdv").textContent        = adv;
+  document.getElementById("statTotal").textContent       = total;
+  document.getElementById("statCampaigns").textContent   = activeCamps.size;
+  document.getElementById("statProjects").textContent    = activeProjs.size || "—";
+  document.getElementById("sbTotal").textContent         = total;
+  document.getElementById("sbBeginner").textContent      = beg;
+  document.getElementById("sbIntermediate").textContent  = int_;
+  document.getElementById("sbAdvanced").textContent      = adv;
+  document.getElementById("sbWLA").textContent           = wla;
+  document.getElementById("sbReviewed").textContent      = rev;
+  document.getElementById("pathBeg").textContent         = beg;
+  document.getElementById("pathInt").textContent         = int_;
+  document.getElementById("pathAdv").textContent         = adv;
 }
 
 // ── SKILL FILTER (from path buttons) ─────────────────────────
