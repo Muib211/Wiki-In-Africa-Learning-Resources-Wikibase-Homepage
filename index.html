@@ -246,8 +246,8 @@ footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
     </div>
     <div class="hero-stats">
       <div class="stat-box"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total Resources</div></div>
-      <div class="stat-box"><div class="stat-num" id="statCampaigns">—</div><div class="stat-label">Campaigns</div></div>
-      <div class="stat-box"><div class="stat-num" id="statProjects">—</div><div class="stat-label">Projects</div></div>
+      <div class="stat-box"><div class="stat-num">9</div><div class="stat-label">Campaigns</div></div>
+      <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">Projects</div></div>
       <div class="stat-box"><div class="stat-num">100%</div><div class="stat-label">Free & Open</div></div>
     </div>
   </div>
@@ -461,100 +461,58 @@ function val(binding, key) {
 
 // ── LOAD ALL MATERIALS ────────────────────────────────────────
 async function loadMaterials() {
-  // Step 1: Fetch raw data — one row per item, no label service (avoids duplicates)
+  // Simplest possible query — one property per OPTIONAL, label service last
+  // Deduplication handled entirely in JavaScript after fetch
   const q = `
-SELECT ?item
-       (GROUP_CONCAT(DISTINCT ?campQ;   separator="|") AS ?camps)
-       (GROUP_CONCAT(DISTINCT ?skillQ;  separator="|") AS ?skills)
-       (GROUP_CONCAT(DISTINCT ?formatQ; separator="|") AS ?formats)
-       (GROUP_CONCAT(DISTINCT ?projQ;   separator="|") AS ?projs)
-       (GROUP_CONCAT(DISTINCT ?topic;   separator=", ") AS ?topic)
-       (GROUP_CONCAT(DISTINCT ?creator; separator=", ") AS ?creator)
-       (GROUP_CONCAT(DISTINCT ?url;     separator="|") AS ?url)
-       (GROUP_CONCAT(DISTINCT ?year;    separator="|") AS ?year)
-       (GROUP_CONCAT(DISTINCT ?reviewQ; separator="|") AS ?reviews)
+SELECT ?item ?itemLabel ?campQ ?campLabel ?skillQ ?skillLabel
+       ?formatLabel ?topic ?creator ?url ?year ?reviewLabel
 WHERE {
   ?item wdt:P2 ?campQ .
   FILTER(?campQ IN (wd:Q4,wd:Q5,wd:Q6,wd:Q7,wd:Q8,wd:Q9,wd:Q10,wd:Q11,wd:Q12))
   OPTIONAL { ?item wdt:P4  ?skillQ  . }
-  OPTIONAL { ?item wdt:P6  ?formatQ . }
-  OPTIONAL { ?item wdt:P3  ?projQ   . }
+  OPTIONAL { ?item wdt:P6  ?format  . BIND(STR(?format) AS ?formatLabel) }
   OPTIONAL { ?item wdt:P10 ?topic   . }
   OPTIONAL { ?item wdt:P8  ?creator . }
   OPTIONAL { ?item wdt:P1  ?url     . }
   OPTIONAL { ?item wdt:P9  ?year    . }
   OPTIONAL { ?item wdt:P11 ?reviewQ . }
-}
-GROUP BY ?item
-ORDER BY ?item`;
-
-  // Step 2: Fetch labels for all unique Q-items
-  const labelQ = `
-SELECT ?item ?itemLabel WHERE {
-  VALUES ?item {
-    wd:Q4 wd:Q5 wd:Q6 wd:Q7 wd:Q8 wd:Q9 wd:Q10 wd:Q11 wd:Q12
-    wd:Q26 wd:Q27 wd:Q28
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en" .
   }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }
 }`;
 
-  // Fetch raw rows (guaranteed one per item due to GROUP BY ?item)
   const rows = await sparql(q);
 
-  // Build item label map from a separate query
-  const itemRows = await sparql(labelQ);
-  const labelMap = {};
-  itemRows.forEach(r => {
-    const qid = val(r,"item").split("/").pop();
-    labelMap[qid] = val(r,"itemLabel");
-  });
-
-  // Fetch item labels for the actual materials
-  const itemQids = rows.map(r => val(r,"item").split("/").pop());
-  const chunkSize = 50;
-  for (let i = 0; i < itemQids.length; i += chunkSize) {
-    const chunk = itemQids.slice(i, i + chunkSize);
-    const valStr = chunk.map(q => `wd:${q}`).join(" ");
-    const chunkQ = `
-SELECT ?item ?itemLabel WHERE {
-  VALUES ?item { ${valStr} }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }
-}`;
-    const chunkRows = await sparql(chunkQ);
-    chunkRows.forEach(r => {
-      const qid = val(r,"item").split("/").pop();
-      labelMap[qid] = val(r,"itemLabel");
-    });
+  // Deduplicate in JavaScript — keep first occurrence of each item URL
+  const seen = new Set();
+  const unique = [];
+  for (const r of rows) {
+    const itemUrl = val(r, "item");
+    if (!seen.has(itemUrl)) {
+      seen.add(itemUrl);
+      unique.push(r);
+    }
   }
 
-  // Map rows to material objects — one object per item, guaranteed
-  return rows.map(r => {
-    const qid      = val(r,"item").split("/").pop();
-    const campQid  = val(r,"camps").split("|")[0].split("/").pop();
-    const skillQid = val(r,"skills").split("|")[0].split("/").pop();
-    const fmtQid   = val(r,"formats").split("|")[0].split("/").pop();
-    const projQid  = val(r,"projs").split("|")[0].split("/").pop();
-    const rawYear  = val(r,"year").split("|")[0];
-    const reviewQid = val(r,"reviews").split("|")[0].split("/").pop();
-    return {
-      id:       qid,
-      url_item: val(r,"item"),
-      title:    labelMap[qid]   || qid,
-      campQ:    campQid,
-      camp:     labelMap[campQid]  || campQid,
-      skillQ:   skillQid,
-      skill:    labelMap[skillQid] || "",
-      formatQ:  fmtQid,
-      format:   labelMap[fmtQid]  || "",
-      projQ:    projQid,
-      proj:     labelMap[projQid] || "",
-      topic:    val(r,"topic"),
-      creator:  val(r,"creator"),
-      url:      val(r,"url").split("|")[0],
-      year:     rawYear.substring(0,4),
-      review:   labelMap[reviewQid] || "",
-    };
-  });
+  return unique.map(r => ({
+    id:       val(r,"item").split("/").pop(),
+    url_item: val(r,"item"),
+    title:    val(r,"itemLabel"),
+    campQ:    val(r,"campQ").split("/").pop(),
+    camp:     val(r,"campLabel"),
+    skillQ:   val(r,"skillQ") ? val(r,"skillQ").split("/").pop() : "",
+    skill:    val(r,"skillLabel"),
+    formatQ:  "",
+    format:   val(r,"formatLabel"),
+    projQ:    "",
+    proj:     "",
+    topic:    val(r,"topic"),
+    creator:  val(r,"creator"),
+    url:      val(r,"url"),
+    year:     val(r,"year") ? val(r,"year").substring(0,4) : "",
+    review:   val(r,"reviewLabel"),
+  }));
+
 }
 
 // ── RENDER CARDS ──────────────────────────────────────────────
@@ -666,22 +624,16 @@ function updateStats() {
   const wla   = allMaterials.filter(m => m.campQ  === "Q4").length;
   const rev   = allMaterials.filter(m => m.review === "Reviewed").length;
 
-  // Live counts — only campaigns/projects that actually have resources
-  const activeCamps = new Set(allMaterials.map(m => m.campQ).filter(Boolean));
-  const activeProjs = new Set(allMaterials.map(m => m.projQ).filter(Boolean));
-
-  document.getElementById("statTotal").textContent       = total;
-  document.getElementById("statCampaigns").textContent   = activeCamps.size;
-  document.getElementById("statProjects").textContent    = activeProjs.size || "—";
-  document.getElementById("sbTotal").textContent         = total;
-  document.getElementById("sbBeginner").textContent      = beg;
-  document.getElementById("sbIntermediate").textContent  = int_;
-  document.getElementById("sbAdvanced").textContent      = adv;
-  document.getElementById("sbWLA").textContent           = wla;
-  document.getElementById("sbReviewed").textContent      = rev;
-  document.getElementById("pathBeg").textContent         = beg;
-  document.getElementById("pathInt").textContent         = int_;
-  document.getElementById("pathAdv").textContent         = adv;
+  document.getElementById("statTotal").textContent  = total;
+  document.getElementById("sbTotal").textContent     = total;
+  document.getElementById("sbBeginner").textContent  = beg;
+  document.getElementById("sbIntermediate").textContent = int_;
+  document.getElementById("sbAdvanced").textContent  = adv;
+  document.getElementById("sbWLA").textContent       = wla;
+  document.getElementById("sbReviewed").textContent  = rev;
+  document.getElementById("pathBeg").textContent     = beg;
+  document.getElementById("pathInt").textContent     = int_;
+  document.getElementById("pathAdv").textContent     = adv;
 }
 
 // ── SKILL FILTER (from path buttons) ─────────────────────────
