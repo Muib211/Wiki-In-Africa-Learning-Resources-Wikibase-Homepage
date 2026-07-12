@@ -438,64 +438,75 @@ function val(binding, key) {
 function splitList(str, sep) {
   return str ? str.split(sep).filter(Boolean) : [];
 }
-// FIX: EVERY multi-valued property (campaign, skill, format, project, topic,
-// creator, url, year, review) is now aggregated with GROUP_CONCAT inside a
-// single nested subquery, GROUP BY ?item. That guarantees exactly one row
-// per item no matter how many statements any of those properties hold —
-// which is what was still causing duplicate cards after only fixing creator
-// (some items also carry more than one format/project/skill/etc. value).
+// FIX v2: packing every optional property into ONE subquery (previous
+// version) forced Blazegraph to build a large internal join before it could
+// aggregate, which can time out on the live endpoint and return a 500.
+// Instead, each multi-valued property gets its OWN small, isolated
+// GROUP_CONCAT subquery, LEFT-JOINed on ?item — cheap for the query engine,
+// and still guarantees exactly one output row per item.
 async function loadMaterials() {
   const q = `
-SELECT ?item ?itemLabel
-       ?campQs ?camps ?skillQs ?skills ?formatQs ?formats
-       ?projQs ?projects ?topics ?creators ?urls ?years ?reviews
+SELECT ?item ?itemLabel ?campQ ?campLabel
+       ?skillQs ?skills ?formats ?projQs ?projects
+       ?topics ?creators ?urls ?years ?reviews
 WHERE {
-  {
-    SELECT DISTINCT ?item WHERE {
-      ?item wdt:P2 ?anyCamp .
-      FILTER(?anyCamp IN (wd:Q4,wd:Q5,wd:Q6,wd:Q7,wd:Q8,wd:Q9,wd:Q10,wd:Q11,wd:Q12))
-    }
+  ?item wdt:P2 ?campQ .
+  FILTER(?campQ IN (wd:Q4,wd:Q5,wd:Q6,wd:Q7,wd:Q8,wd:Q9,wd:Q10,wd:Q11,wd:Q12))
+
+  OPTIONAL {
+    SELECT ?item
+      (GROUP_CONCAT(DISTINCT ?skillQ;   separator="|")  AS ?skillQs)
+      (GROUP_CONCAT(DISTINCT ?skillLbl; separator=" | ") AS ?skills)
+    WHERE { ?item wdt:P4 ?skillQ . ?skillQ rdfs:label ?skillLbl . FILTER(LANG(?skillLbl)="en") }
+    GROUP BY ?item
+  }
+  OPTIONAL {
+    SELECT ?item (GROUP_CONCAT(DISTINCT ?formatLbl; separator=" | ") AS ?formats)
+    WHERE { ?item wdt:P6 ?formatQ . ?formatQ rdfs:label ?formatLbl . FILTER(LANG(?formatLbl)="en") }
+    GROUP BY ?item
   }
   OPTIONAL {
     SELECT ?item
-      (GROUP_CONCAT(DISTINCT ?campQ;    separator="|")  AS ?campQs)
-      (GROUP_CONCAT(DISTINCT ?campLbl;  separator=" | ") AS ?camps)
-      (GROUP_CONCAT(DISTINCT ?skillQ;   separator="|")  AS ?skillQs)
-      (GROUP_CONCAT(DISTINCT ?skillLbl; separator=" | ") AS ?skills)
-      (GROUP_CONCAT(DISTINCT ?formatQ;   separator="|")  AS ?formatQs)
-      (GROUP_CONCAT(DISTINCT ?formatLbl; separator=" | ") AS ?formats)
-      (GROUP_CONCAT(DISTINCT ?projQ;    separator="|")  AS ?projQs)
-      (GROUP_CONCAT(DISTINCT ?projLbl;  separator=" | ") AS ?projects)
-      (GROUP_CONCAT(DISTINCT ?topicVal;   separator=" | ") AS ?topics)
-      (GROUP_CONCAT(DISTINCT ?creatorVal; separator=" & ") AS ?creators)
-      (GROUP_CONCAT(DISTINCT ?urlVal;     separator=" | ") AS ?urls)
-      (GROUP_CONCAT(DISTINCT ?yearVal;    separator=" | ") AS ?years)
-      (GROUP_CONCAT(DISTINCT ?reviewLbl;  separator=" | ") AS ?reviews)
-    WHERE {
-      OPTIONAL { ?item wdt:P2  ?campQ .   ?campQ   rdfs:label ?campLbl   . FILTER(LANG(?campLbl)="en") }
-      OPTIONAL { ?item wdt:P4  ?skillQ .  ?skillQ  rdfs:label ?skillLbl  . FILTER(LANG(?skillLbl)="en") }
-      OPTIONAL { ?item wdt:P6  ?formatQ . ?formatQ rdfs:label ?formatLbl . FILTER(LANG(?formatLbl)="en") }
-      OPTIONAL { ?item wdt:P3  ?projQ .   ?projQ   rdfs:label ?projLbl   . FILTER(LANG(?projLbl)="en") }
-      OPTIONAL { ?item wdt:P10 ?topicVal . }
-      OPTIONAL { ?item wdt:P8  ?creatorVal . }
-      OPTIONAL { ?item wdt:P1  ?urlVal . }
-      OPTIONAL { ?item wdt:P9  ?yearVal . }
-      OPTIONAL { ?item wdt:P11 ?reviewQ . ?reviewQ rdfs:label ?reviewLbl . FILTER(LANG(?reviewLbl)="en") }
-    }
+      (GROUP_CONCAT(DISTINCT ?projQ;   separator="|")  AS ?projQs)
+      (GROUP_CONCAT(DISTINCT ?projLbl; separator=" | ") AS ?projects)
+    WHERE { ?item wdt:P3 ?projQ . ?projQ rdfs:label ?projLbl . FILTER(LANG(?projLbl)="en") }
     GROUP BY ?item
   }
+  OPTIONAL {
+    SELECT ?item (GROUP_CONCAT(DISTINCT ?topicVal; separator=" | ") AS ?topics)
+    WHERE { ?item wdt:P10 ?topicVal . }
+    GROUP BY ?item
+  }
+  OPTIONAL {
+    SELECT ?item (GROUP_CONCAT(DISTINCT ?creatorVal; separator=" & ") AS ?creators)
+    WHERE { ?item wdt:P8 ?creatorVal . }
+    GROUP BY ?item
+  }
+  OPTIONAL {
+    SELECT ?item (GROUP_CONCAT(DISTINCT ?urlVal; separator=" | ") AS ?urls)
+    WHERE { ?item wdt:P1 ?urlVal . }
+    GROUP BY ?item
+  }
+  OPTIONAL {
+    SELECT ?item (GROUP_CONCAT(DISTINCT ?yearVal; separator=" | ") AS ?years)
+    WHERE { ?item wdt:P9 ?yearVal . }
+    GROUP BY ?item
+  }
+  OPTIONAL {
+    SELECT ?item (GROUP_CONCAT(DISTINCT ?reviewLbl; separator=" | ") AS ?reviews)
+    WHERE { ?item wdt:P11 ?reviewQ . ?reviewQ rdfs:label ?reviewLbl . FILTER(LANG(?reviewLbl)="en") }
+    GROUP BY ?item
+  }
+
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en" .
   }
 }
-ORDER BY ?itemLabel`;
+ORDER BY ?campLabel ?itemLabel`;
   const rows = await sparql(q);
   return rows.map(r => {
-    const campQs   = splitList(val(r,"campQs"), "|").map(u => u.split("/").pop());
-    const camps    = splitList(val(r,"camps"), " | ");
     const skillQs  = splitList(val(r,"skillQs"), "|").map(u => u.split("/").pop());
     const skills   = splitList(val(r,"skills"), " | ");
-    const formatQs = splitList(val(r,"formatQs"), "|").map(u => u.split("/").pop());
     const formats  = splitList(val(r,"formats"), " | ");
     const projQs   = splitList(val(r,"projQs"), "|").map(u => u.split("/").pop());
     const projects = splitList(val(r,"projects"), " | ");
@@ -506,15 +517,13 @@ ORDER BY ?itemLabel`;
       id:       val(r,"item").split("/").pop(),
       url_item: val(r,"item"),
       title:    val(r,"itemLabel"),
-      campQ:    campQs[0] || "",
-      camp:     camps[0] || "",
-      campQs, camps,
+      campQ:    val(r,"campQ").split("/").pop(),
+      camp:     val(r,"campLabel"),
       skillQ:   skillQs[0] || "",
       skill:    skills[0] || "",
       skillQs, skills,
-      formatQ:  formatQs[0] || "",
       format:   formats[0] || "",
-      formatQs, formats,
+      formats,
       projQ:    projQs[0] || "",
       proj:     projects[0] || "",
       projQs, projects,
@@ -531,7 +540,7 @@ function getFiltered() {
   const q = searchQ.toLowerCase();
   return allMaterials.filter(m => {
     if (activeSkill    !== "all" && !m.skillQs.includes(activeSkill))    return false;
-    if (activeCampaign !== "all" && !m.campQs.includes(activeCampaign))  return false;
+    if (activeCampaign !== "all" && m.campQ !== activeCampaign)          return false;
     if (activeFormat   !== "all" && !m.formats.includes(activeFormat))   return false;
     if (activeProject  !== "all" && !m.projects.includes(activeProject)) return false;
     if (q && ![m.title,m.topic,m.creator,m.formats.join(" "),m.camp,m.skills.join(" ")].join(" ").toLowerCase().includes(q)) return false;
@@ -572,7 +581,7 @@ function renderCards() {
 function renderCampaigns() {
   const grid = document.getElementById("campsGrid");
   const counts = {};
-  allMaterials.forEach(m => m.campQs.forEach(cq => counts[cq] = (counts[cq]||0) + 1));
+  allMaterials.forEach(m => counts[m.campQ] = (counts[m.campQ]||0) + 1);
   Object.entries(CAMP_META).forEach(([q, meta]) => {
     const div = document.createElement("div");
     div.className = "camp-card";
@@ -621,10 +630,10 @@ function updateStats() {
   const beg   = allMaterials.filter(m => m.skillQs.includes("Q26")).length;
   const int_  = allMaterials.filter(m => m.skillQs.includes("Q27")).length;
   const adv   = allMaterials.filter(m => m.skillQs.includes("Q28")).length;
-  const wla   = allMaterials.filter(m => m.campQs.includes("Q4")).length;
+  const wla   = allMaterials.filter(m => m.campQ === "Q4").length;
   const rev   = allMaterials.filter(m => m.review === "Reviewed").length;
   // Live campaign count — only campaigns that actually have resources
-  const activeCamps = new Set(allMaterials.flatMap(m => m.campQs).filter(Boolean));
+  const activeCamps = new Set(allMaterials.map(m => m.campQ).filter(Boolean));
   const campCount   = activeCamps.size;
   // Live project count — distinct projects across all materials
   const activeProjs = new Set(allMaterials.flatMap(m => m.projQs).filter(Boolean));
