@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wiki In Africa · Learning Resources</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest:   #1A4A2E;
+  --canopy:   #256840;
+  --leaf:     #3A8C58;
+  --sage:     #7AB893;
+  --mist:     #E8F3EC;
+  --gold:     #C9882A;
+  --amber:    #E8A83E;
+  --sand:     #FDF4E3;
+  --white:    #FFFFFF;
+  --ink:      #0F1F14;
+  --grey1:    #F4F6F5;
+  --grey2:    #E2E8E4;
+  --grey3:    #9DB4A4;
+  --grey4:    #4A6356;
+  --teal:     #0E7490;
+  --ltteal:   #CFFAFE;
+  --indigo:   #3730A3;
+  --ltindigo: #E0E7FF;
+  --red:      #DC2626;
+  --ltred:    #FEE2E2;
+  --purple:   #7C3F8E;
+  --ltpurple: #EAD6F5;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; color: var(--ink); background: var(--white); overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--forest);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 56px;
+  border-bottom: 2px solid var(--gold);
+}
+.nav-brand {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+  color: var(--white); display: flex; align-items: center; gap: 8px;
+}
+.nav-brand span { color: var(--amber); }
+.nav-links { display: flex; gap: 24px; list-style: none; }
+.nav-links a { color: var(--sage); font-size: .82rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; transition: color .2s; }
+.nav-links a:hover { color: var(--amber); }
+.nav-tag { background: var(--gold); color: var(--ink); font-family: 'Syne', sans-serif; font-size: .7rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; letter-spacing: .06em; }
+
+/* HERO */
+.hero { background: var(--forest); padding: 64px 32px 72px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 320px; height: 320px; border-radius: 50%; background: rgba(201,136,42,.1); pointer-events: none; }
+.hero::after  { content: ''; position: absolute; bottom: -80px; left: 10%; width: 240px; height: 240px; border-radius: 50%; background: rgba(58,140,88,.15); pointer-events: none; }
+.hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,136,42,.18); color: var(--amber); font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 18px; border: 1px solid rgba(201,136,42,.3); }
+.hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: var(--white); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 16px; }
+.hero h1 em { color: var(--amber); font-style: normal; }
+.hero-sub { color: var(--sage); font-size: .98rem; line-height: 1.7; margin-bottom: 28px; }
+.hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-primary { background: var(--gold); color: var(--ink); font-family: 'Syne', sans-serif; font-weight: 700; font-size: .88rem; padding: 11px 22px; border-radius: 8px; border: none; cursor: pointer; transition: background .2s, transform .15s; display: inline-block; }
+.btn-primary:hover { background: var(--amber); transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--white); font-family: 'Syne', sans-serif; font-weight: 600; font-size: .88rem; padding: 10px 22px; border-radius: 8px; border: 1.5px solid rgba(255,255,255,.3); cursor: pointer; transition: all .2s; display: inline-block; }
+.btn-ghost:hover { border-color: var(--sage); color: var(--sage); }
+
+/* STATS PANEL */
+.hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.stat-box { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 18px 20px; }
+.stat-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--amber); line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: .72rem; font-weight: 500; color: var(--sage); letter-spacing: .06em; text-transform: uppercase; }
+#statTotal, #statCampaigns { color: var(--amber); }
+
+/* STAT BAR */
+.stat-bar { background: var(--ink); border-top: 2px solid var(--gold); }
+.stat-bar-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-around; flex-wrap: wrap; }
+.sbi { display: flex; flex-direction: column; align-items: center; padding: 18px 12px; gap: 2px; }
+.sbi-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--amber); line-height: 1; }
+.sbi-label { font-size: .68rem; font-weight: 500; color: var(--grey3); letter-spacing: .07em; text-transform: uppercase; text-align: center; }
+.sbi-divider { width: 1px; background: rgba(255,255,255,.08); margin: 14px 0; align-self: stretch; }
+
+/* SEARCH SECTION */
+.search-section { background: var(--mist); padding: 44px 32px; border-bottom: 1px solid var(--grey2); }
+.search-section-inner { max-width: 1100px; margin: 0 auto; }
+.section-eyebrow { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--canopy); margin-bottom: 8px; }
+.search-section h2 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--forest); margin-bottom: 20px; }
+.search-bar { display: flex; background: var(--white); border-radius: 12px; border: 2px solid var(--grey2); overflow: hidden; box-shadow: 0 2px 12px rgba(15,31,20,.08); margin-bottom: 16px; transition: border-color .2s; }
+.search-bar:focus-within { border-color: var(--leaf); }
+.search-icon { padding: 0 14px; display: flex; align-items: center; color: var(--grey3); font-size: 1rem; }
+#searchInput { flex: 1; border: none; outline: none; font-family: 'Inter', sans-serif; font-size: .95rem; padding: 13px 0; background: transparent; color: var(--ink); }
+#searchInput::placeholder { color: var(--grey3); }
+#clearBtn { background: none; border: none; cursor: pointer; padding: 0 14px; color: var(--grey3); font-size: 1.1rem; display: none; }
+#clearBtn:hover { color: var(--ink); }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.filter-label { font-size: .72rem; font-weight: 600; color: var(--grey4); letter-spacing: .06em; text-transform: uppercase; }
+.chip { background: var(--white); border: 1.5px solid var(--grey2); color: var(--grey4); font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 500; padding: 5px 13px; border-radius: 20px; cursor: pointer; transition: all .15s; white-space: nowrap; }
+.chip:hover { border-color: var(--leaf); color: var(--forest); }
+.chip.active { background: var(--forest); border-color: var(--forest); color: var(--white); }
+.fselect { background: var(--white); border: 1.5px solid var(--grey2); color: var(--grey4); font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 500; padding: 5px 13px; border-radius: 20px; cursor: pointer; outline: none; transition: border-color .2s; }
+.fselect:focus { border-color: var(--leaf); }
+
+/* RESULTS META */
+.results-meta { max-width: 1100px; margin: 0 auto; padding: 18px 32px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.results-count { font-size: .82rem; color: var(--grey4); }
+.results-count strong { color: var(--forest); }
+.view-toggle { display: flex; gap: 4px; }
+.view-btn { background: none; border: 1.5px solid var(--grey2); color: var(--grey3); padding: 5px 9px; border-radius: 6px; cursor: pointer; font-size: .82rem; transition: all .15s; }
+.view-btn.active { background: var(--forest); border-color: var(--forest); color: var(--white); }
+
+/* LOADING */
+.loading { text-align: center; padding: 48px; color: var(--grey3); font-size: .9rem; }
+.spinner { width: 36px; height: 36px; border: 3px solid var(--grey2); border-top-color: var(--canopy); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* CARDS */
+#cardsContainer { max-width: 1100px; margin: 0 auto; padding: 20px 32px 48px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+#cardsContainer.list-view { grid-template-columns: 1fr; }
+.card { background: var(--white); border-radius: 14px; border: 1.5px solid var(--grey2); box-shadow: 0 2px 10px rgba(15,31,20,.07); display: flex; flex-direction: column; transition: transform .2s, box-shadow .2s, border-color .2s; overflow: hidden; animation: fadeUp .3s ease both; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(15,31,20,.14); border-color: var(--sage); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.card-stripe { height: 4px; flex-shrink: 0; }
+.card-body { padding: 16px 18px 12px; flex: 1; display: flex; flex-direction: column; gap: 7px; }
+.card-badges { display: flex; gap: 5px; flex-wrap: wrap; }
+.badge { font-size: .65rem; font-weight: 600; letter-spacing: .04em; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; white-space: nowrap; }
+.badge-beginner     { background: #DCF5E7; color: #1A5C35; }
+.badge-intermediate { background: #FFF3CD; color: #7A4F00; }
+.badge-advanced     { background: var(--ltpurple); color: var(--purple); }
+.badge-format       { background: var(--grey1); color: var(--grey4); }
+.badge-lang         { background: var(--ltindigo); color: var(--indigo); }
+.card-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: .9rem; color: var(--forest); line-height: 1.35; }
+.card-meta  { font-size: .75rem; color: var(--grey4); }
+.card-footer { padding: 9px 18px 13px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--grey1); }
+.card-campaign { font-size: .68rem; font-weight: 600; color: var(--canopy); letter-spacing: .04em; text-transform: uppercase; }
+.card-link { font-size: .75rem; font-weight: 600; color: var(--teal); display: flex; align-items: center; gap: 3px; transition: color .15s; }
+.card-link:hover { color: var(--forest); }
+
+/* EMPTY STATE */
+#emptyState { display: none; grid-column: 1/-1; text-align: center; padding: 56px 20px; }
+#emptyState .ei { font-size: 2.5rem; margin-bottom: 10px; }
+#emptyState p { color: var(--grey4); font-size: .9rem; }
+
+/* CAMPAIGNS */
+.campaigns-section { background: var(--sand); padding: 52px 32px; border-top: 1px solid var(--grey2); }
+.campaigns-inner { max-width: 1100px; margin: 0 auto; }
+.campaigns-inner h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--forest); margin-bottom: 24px; }
+.camps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.camp-card { background: var(--white); border-radius: 12px; border: 1.5px solid var(--grey2); padding: 16px 14px; cursor: pointer; transition: all .2s; display: flex; flex-direction: column; gap: 6px; }
+.camp-card:hover, .camp-card.active { border-color: var(--canopy); background: var(--mist); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(15,31,20,.1); }
+.camp-icon { font-size: 1.4rem; }
+.camp-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .82rem; color: var(--forest); line-height: 1.3; }
+.camp-count { font-size: .72rem; color: var(--grey4); }
+.camp-count span { font-weight: 700; color: var(--canopy); }
+
+/* SKILL PATHS */
+.paths-section { padding: 52px 32px; border-top: 1px solid var(--grey2); }
+.paths-inner { max-width: 1100px; margin: 0 auto; }
+.paths-inner h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--forest); margin-bottom: 6px; }
+.paths-sub { color: var(--grey4); font-size: .88rem; margin-bottom: 24px; }
+.paths-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.path-card { border-radius: 14px; padding: 22px; position: relative; overflow: hidden; }
+.path-card.beginner     { background: linear-gradient(135deg, #E8F7EE, #C8ECD8); }
+.path-card.intermediate { background: linear-gradient(135deg, #FEF6E4, #FDE9B2); }
+.path-card.advanced     { background: linear-gradient(135deg, #F5E8F7, #E8C8F0); }
+.path-lbl { font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+.beginner .path-lbl { color: #1A5C35; }
+.intermediate .path-lbl { color: #7A4F00; }
+.advanced .path-lbl { color: #5C1A7A; }
+.path-num { font-family: 'Syne', sans-serif; font-size: 2.6rem; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+.beginner .path-num { color: var(--canopy); }
+.intermediate .path-num { color: var(--gold); }
+.advanced .path-num { color: var(--purple); }
+.path-title { font-size: .8rem; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
+.path-btn { display: inline-block; font-size: .76rem; font-weight: 600; padding: 7px 14px; border-radius: 20px; cursor: pointer; border: none; font-family: 'Inter', sans-serif; transition: all .15s; }
+.beginner .path-btn     { background: var(--canopy); color: var(--white); }
+.intermediate .path-btn { background: var(--gold); color: var(--ink); }
+.advanced .path-btn     { background: var(--purple); color: var(--white); }
+.path-btn:hover { opacity: .85; transform: translateX(2px); }
+
+/* PROJECTS BAR */
+.projects-section { background: var(--forest); padding: 36px 32px; }
+.projects-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.projects-inner h2 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+.projects-sub { font-size: .78rem; color: var(--sage); }
+.proj-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.proj-pill { background: rgba(255,255,255,.08); color: var(--white); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 6px 14px; font-size: .8rem; font-weight: 500; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 5px; }
+.proj-pill:hover, .proj-pill.active { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.pill-count { background: rgba(255,255,255,.15); border-radius: 20px; font-size: .66rem; font-weight: 700; padding: 1px 6px; }
+.proj-pill.active .pill-count { background: rgba(0,0,0,.15); }
+
+/* SPARQL INFO */
+.sparql-section { background: var(--grey1); padding: 40px 32px; border-top: 1px solid var(--grey2); }
+.sparql-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+.sparql-inner h2 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--forest); margin-bottom: 8px; }
+.sparql-inner p { font-size: .88rem; color: var(--grey4); line-height: 1.7; margin-bottom: 14px; }
+.sparql-link { display: inline-flex; align-items: center; gap: 6px; background: var(--forest); color: var(--white); font-family: 'Syne', sans-serif; font-weight: 600; font-size: .84rem; padding: 10px 18px; border-radius: 8px; transition: background .2s; }
+.sparql-link:hover { background: var(--canopy); }
+pre.sparql-code { background: #1E1E1E; color: #A7F3D0; font-family: 'Courier New', monospace; font-size: .75rem; padding: 18px; border-radius: 10px; overflow-x: auto; line-height: 1.6; }
+
+/* FOOTER */
+footer { background: var(--ink); color: var(--grey3); padding: 28px 32px; text-align: center; font-size: .78rem; line-height: 1.9; }
+footer a { color: var(--sage); }
+footer a:hover { color: var(--amber); }
+footer strong { color: var(--white); font-family: 'Syne', sans-serif; }
+
+@media (max-width: 860px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-stats { display: none; }
+  .paths-grid { grid-template-columns: 1fr; }
+  .sparql-inner { grid-template-columns: 1fr; }
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  #cardsContainer { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand"><span>◆</span> Wiki In Africa <span style="color:var(--sage);font-weight:400"> · Wikibase</span></div>
+  <ul class="nav-links">
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#campaigns">Campaigns</a></li>
+    <li><a href="#paths">Learning Paths</a></li>
+    <li><a href="https://wikiinafrica.wikibase.cloud/wiki/Special:NewItem" target="_blank">Add Resource</a></li>
+    <li><a href="https://wikiinafrica.wikibase.cloud/query" target="_blank">SPARQL ↗</a></li>
+  </ul>
+  <span class="nav-tag">WIKIBASE</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><span>◆</span> Open Knowledge · Africa</div>
+      <h1>Every training resource.<br><em>One place.</em></h1>
+      <p class="hero-sub">A structured, searchable knowledge base of Wiki In Africa training materials — organised by campaign, skill level, project and language.</p>
+      <div class="hero-btns">
+        <a href="#resources" class="btn-primary">Browse Resources</a>
+        <a href="#paths" class="btn-ghost">Find your learning path</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-box"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total Resources</div></div>
+      <div class="stat-box"><div class="stat-num">9</div><div class="stat-label">Campaigns</div></div>
+      <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">Projects</div></div>
+      <div class="stat-box"><div class="stat-num">100%</div><div class="stat-label">Free & Open</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="stat-bar-inner">
+    <div class="sbi"><div class="sbi-num" id="sbTotal">—</div><div class="sbi-label">Resources</div></div>
+    <div class="sbi-divider"></div>
+    <div class="sbi"><div class="sbi-num" id="sbBeginner">—</div><div class="sbi-label">Beginner</div></div>
+    <div class="sbi-divider"></div>
+    <div class="sbi"><div class="sbi-num" id="sbIntermediate">—</div><div class="sbi-label">Intermediate</div></div>
+    <div class="sbi-divider"></div>
+    <div class="sbi"><div class="sbi-num" id="sbAdvanced">—</div><div class="sbi-label">Advanced</div></div>
+    <div class="sbi-divider"></div>
+    <div class="sbi"><div class="sbi-num" id="sbWLA">—</div><div class="sbi-label">Wiki Loves Africa</div></div>
+    <div class="sbi-divider"></div>
+    <div class="sbi"><div class="sbi-num" id="sbReviewed">—</div><div class="sbi-label">Reviewed</div></div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-section" id="resources">
+  <div class="search-section-inner">
+    <div class="section-eyebrow">Resource Library</div>
+    <h2>Find training materials</h2>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search by title, topic, creator, format…" autocomplete="off">
+      <button id="clearBtn" title="Clear">✕</button>
+    </div>
+    <div class="filters">
+      <span class="filter-label">Skill:</span>
+      <button class="chip active" data-skill="all">All</button>
+      <button class="chip" data-skill="Q26">Beginner</button>
+      <button class="chip" data-skill="Q27">Intermediate</button>
+      <button class="chip" data-skill="Q28">Advanced</button>
+      <select class="fselect" id="campaignFilter">
+        <option value="all">All campaigns</option>
+        <option value="Q4">Wiki Loves Africa</option>
+        <option value="Q7">Wiki Loves Women</option>
+        <option value="Q5">ISA Campaign</option>
+        <option value="Q6">WikiFundi</option>
+        <option value="Q9">WikiAfrica Hour</option>
+        <option value="Q10">Inspiring Open</option>
+        <option value="Q11">WikiChallenge African Schools</option>
+        <option value="Q12">WikiAfrica Heritage</option>
+        <option value="Q8">Cross-Cutting</option>
+      </select>
+      <select class="fselect" id="formatFilter">
+        <option value="all">All formats</option>
+        <option value="Video">Video</option>
+        <option value="Document">Document</option>
+        <option value="Article">Article</option>
+        <option value="Website">Website</option>
+        <option value="Wikibook">Wikibook</option>
+        <option value="ZIP/Package">ZIP/Package</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS META -->
+<div class="results-meta">
+  <div class="results-count">Showing <strong id="resultCount">—</strong> resources</div>
+  <div class="view-toggle">
+    <button class="view-btn active" id="gridBtn" title="Grid">⊞</button>
+    <button class="view-btn" id="listBtn" title="List">☰</button>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div id="cardsContainer">
+  <div class="loading"><div class="spinner"></div>Loading resources from Wikibase…</div>
+  <div id="emptyState"><div class="ei">🔎</div><p>No resources match your search.<br>Try different terms or clear the filters.</p></div>
+</div>
+
+<!-- CAMPAIGNS -->
+<div class="campaigns-section" id="campaigns">
+  <div class="campaigns-inner">
+    <div class="section-eyebrow">Browse by Programme</div>
+    <h2>Wiki In Africa Campaigns</h2>
+    <div class="camps-grid" id="campsGrid"></div>
+  </div>
+</div>
+
+<!-- LEARNING PATHS -->
+<div class="paths-section" id="paths">
+  <div class="paths-inner">
+    <div class="section-eyebrow">Learning Pathways</div>
+    <h2>Where do you start?</h2>
+    <p class="paths-sub">Find resources matched to your experience level.</p>
+    <div class="paths-grid">
+      <div class="path-card beginner">
+        <div class="path-lbl">🌱 Beginner</div>
+        <div class="path-num" id="pathBeg">—</div>
+        <div class="path-title">New to Wikimedia? Start here.</div>
+        <button class="path-btn" onclick="filterSkill('Q26')">Show beginner resources →</button>
+      </div>
+      <div class="path-card intermediate">
+        <div class="path-lbl">📖 Intermediate</div>
+        <div class="path-num" id="pathInt">—</div>
+        <div class="path-title">Ready to go deeper.</div>
+        <button class="path-btn" onclick="filterSkill('Q27')">Show intermediate resources →</button>
+      </div>
+      <div class="path-card advanced">
+        <div class="path-lbl">🚀 Advanced</div>
+        <div class="path-num" id="pathAdv">—</div>
+        <div class="path-title">Pushing the frontier.</div>
+        <button class="path-btn" onclick="filterSkill('Q28')">Show advanced resources →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="projects-section">
+  <div class="projects-inner">
+    <div>
+      <h2>Browse by Wikimedia Project</h2>
+      <p class="projects-sub">Filter by the platform you are working on</p>
+    </div>
+    <div class="proj-pills" id="projPills"></div>
+  </div>
+</div>
+
+<!-- SPARQL -->
+<div class="sparql-section">
+  <div class="sparql-inner">
+    <div>
+      <h2>Query this Wikibase</h2>
+      <p>All resources are structured data — query them directly using SPARQL to build reports, exports or custom views. The query service updates automatically as new Items are added.</p>
+      <a class="sparql-link" href="https://wikiinafrica.wikibase.cloud/query" target="_blank">Open Query Service ↗</a>
+    </div>
+    <pre class="sparql-code">PREFIX wd:  &lt;https://wikiinafrica.wikibase.cloud/entity/&gt;
+PREFIX wdt: &lt;https://wikiinafrica.wikibase.cloud/prop/direct/&gt;
+PREFIX wikibase: &lt;http://wikiba.se/ontology#&gt;
+PREFIX bd:  &lt;http://www.bigdata.com/rdf#&gt;
+
+SELECT ?item ?itemLabel ?skillLabel
+WHERE {
+  ?item wdt:P2 wd:Q4 .
+  OPTIONAL { ?item wdt:P4 ?skill . }
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en" .
+  }
+}
+ORDER BY ?skillLabel</pre>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Wiki In Africa · Learning Resources Wikibase</strong><br>
+  All resources are free and openly licensed ·
+  <a href="https://meta.wikimedia.org/wiki/Wiki_In_Africa" target="_blank">Meta-Wiki</a> ·
+  <a href="https://meta.wikimedia.org/wiki/Wiki_In_Africa/Resources" target="_blank">Resources page</a> ·
+  <a href="https://wikiinafrica.wikibase.cloud" target="_blank">Wikibase</a><br>
+  <span style="opacity:.5;font-size:.7rem;">Data served live from wikiinafrica.wikibase.cloud</span>
+</footer>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+const SPARQL = "https://wikiinafrica.wikibase.cloud/query/sparql";
+const PFX = `
+PREFIX wd:  <https://wikiinafrica.wikibase.cloud/entity/>
+PREFIX wdt: <https://wikiinafrica.wikibase.cloud/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd:  <http://www.bigdata.com/rdf#>`;
+
+const CAMP_META = {
+  Q4:  { name:"Wiki Loves Africa",          icon:"📸", color:"#256840" },
+  Q7:  { name:"Wiki Loves Women",           icon:"♀️",  color:"#B84A2A" },
+  Q5:  { name:"ISA Campaign",               icon:"🏷️",  color:"#2D6FA4" },
+  Q6:  { name:"WikiFundi",                  icon:"📱", color:"#7C3F8E" },
+  Q9:  { name:"WikiAfrica Hour",            icon:"🎙️",  color:"#0E7490" },
+  Q10: { name:"Inspiring Open",             icon:"🌍", color:"#C9882A" },
+  Q11: { name:"WikiChallenge African Schools",icon:"🏫",color:"#3730A3" },
+  Q12: { name:"WikiAfrica Heritage",        icon:"🏛️",  color:"#7C2D12" },
+  Q8:  { name:"Cross-Cutting",              icon:"🔗", color:"#374151" },
+};
+
+const SKILL_META = {
+  Q26: "Beginner",
+  Q27: "Intermediate",
+  Q28: "Advanced",
+};
+
+// ── STATE ─────────────────────────────────────────────────────
+let allMaterials = [];
+let activeSkill    = "all";
+let activeCampaign = "all";
+let activeFormat   = "all";
+let activeProject  = "all";
+let searchQ        = "";
+let isListView     = false;
+
+// ── SPARQL FETCH ──────────────────────────────────────────────
+async function sparql(query) {
+  const url = SPARQL + "?query=" + encodeURIComponent(PFX + "\n" + query) + "&format=json";
+  const r = await fetch(url, { headers: { Accept: "application/sparql-results+json" } });
+  if (!r.ok) throw new Error("SPARQL error " + r.status);
+  const d = await r.json();
+  return d.results.bindings;
+}
+
+function val(binding, key) {
+  return binding[key] ? binding[key].value : "";
+}
+
+// ── LOAD ALL MATERIALS ────────────────────────────────────────
+async function loadMaterials() {
+  const q = `
+SELECT DISTINCT ?item ?itemLabel ?campQ ?campLabel ?skillQ ?skillLabel
+       ?formatQ ?formatLabel ?topic ?creator ?url ?year ?reviewQ ?reviewLabel
+WHERE {
+  ?item wdt:P2 ?campQ .
+  OPTIONAL { ?item wdt:P4  ?skillQ  . }
+  OPTIONAL { ?item wdt:P6  ?formatQ . }
+  OPTIONAL { ?item wdt:P10 ?topic   . }
+  OPTIONAL { ?item wdt:P8  ?creator . }
+  OPTIONAL { ?item wdt:P1  ?url     . }
+  OPTIONAL { ?item wdt:P9  ?year    . }
+  OPTIONAL { ?item wdt:P11 ?reviewQ . }
+  FILTER(?campQ IN (wd:Q4,wd:Q5,wd:Q6,wd:Q7,wd:Q8,wd:Q9,wd:Q10,wd:Q11,wd:Q12))
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en" .
+  }
+}
+ORDER BY ?campLabel ?skillLabel ?itemLabel`;
+
+  const rows = await sparql(q);
+  return rows.map(r => ({
+    id:       val(r,"item").split("/").pop(),
+    url_item: val(r,"item"),
+    title:    val(r,"itemLabel"),
+    campQ:    val(r,"campQ").split("/").pop(),
+    camp:     val(r,"campLabel"),
+    skillQ:   val(r,"skillQ").split("/").pop(),
+    skill:    val(r,"skillLabel"),
+    formatQ:  val(r,"formatQ").split("/").pop(),
+    format:   val(r,"formatLabel"),
+    topic:    val(r,"topic"),
+    creator:  val(r,"creator"),
+    url:      val(r,"url"),
+    year:     val(r,"year").substring(0,4),
+    review:   val(r,"reviewLabel"),
+  }));
+}
+
+// ── RENDER CARDS ──────────────────────────────────────────────
+function getFiltered() {
+  const q = searchQ.toLowerCase();
+  return allMaterials.filter(m => {
+    if (activeSkill    !== "all" && m.skillQ    !== activeSkill)    return false;
+    if (activeCampaign !== "all" && m.campQ     !== activeCampaign) return false;
+    if (activeFormat   !== "all" && m.format    !== activeFormat)   return false;
+    if (activeProject  !== "all" && !m.projects?.includes(activeProject)) return false;
+    if (q && ![m.title,m.topic,m.creator,m.format,m.camp,m.skill].join(" ").toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+function renderCards() {
+  const container = document.getElementById("cardsContainer");
+  container.querySelectorAll(".card").forEach(c => c.remove());
+
+  const filtered = getFiltered();
+  document.getElementById("resultCount").textContent = filtered.length;
+  document.getElementById("emptyState").style.display = filtered.length === 0 ? "block" : "none";
+
+  filtered.forEach((m, i) => {
+    const meta = CAMP_META[m.campQ] || {};
+    const color = meta.color || "#256840";
+    const skillClass = m.skill === "Beginner" ? "badge-beginner" : m.skill === "Intermediate" ? "badge-intermediate" : m.skill === "Advanced" ? "badge-advanced" : "badge-format";
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.animationDelay = Math.min(i * 0.03, 0.4) + "s";
+    card.innerHTML = `
+      <div class="card-stripe" style="background:${color}"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          ${m.skill ? `<span class="badge ${skillClass}">${m.skill}</span>` : ""}
+          ${m.format ? `<span class="badge badge-format">${m.format}</span>` : ""}
+        </div>
+        <div class="card-title">${m.title || "Untitled"}</div>
+        <div class="card-meta">${[m.topic, m.creator, m.year].filter(Boolean).join(" · ")}</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-campaign">${m.camp || ""}</span>
+        <a class="card-link" href="${m.url || m.url_item}" target="_blank">View ↗</a>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+// ── RENDER CAMPAIGNS ─────────────────────────────────────────
+function renderCampaigns() {
+  const grid = document.getElementById("campsGrid");
+  const counts = {};
+  allMaterials.forEach(m => counts[m.campQ] = (counts[m.campQ]||0) + 1);
+
+  Object.entries(CAMP_META).forEach(([q, meta]) => {
+    const div = document.createElement("div");
+    div.className = "camp-card";
+    div.innerHTML = `
+      <div class="camp-icon">${meta.icon}</div>
+      <div class="camp-name">${meta.name}</div>
+      <div class="camp-count"><span>${counts[q]||0}</span> resource${counts[q]!==1?"s":""}</div>`;
+    div.addEventListener("click", () => {
+      document.querySelectorAll(".camp-card").forEach(c => c.classList.remove("active"));
+      if (activeCampaign === q) {
+        activeCampaign = "all";
+        document.getElementById("campaignFilter").value = "all";
+      } else {
+        activeCampaign = q;
+        document.getElementById("campaignFilter").value = q;
+        div.classList.add("active");
+      }
+      renderCards();
+      document.getElementById("resources").scrollIntoView({behavior:"smooth"});
+    });
+    grid.appendChild(div);
+  });
+}
+
+// ── RENDER PROJECT PILLS ──────────────────────────────────────
+function renderProjectPills() {
+  const counts = {};
+  allMaterials.forEach(m => {
+    if (m.format) counts[m.format] = (counts[m.format]||0)+1;
+  });
+  // Use projects from data — here showing format as proxy
+  const pills = document.getElementById("projPills");
+  const projects = ["Wikipedia","Wikimedia Commons","Wikidata","Wikiquote","WikiFundi Platform"];
+  projects.forEach(p => {
+    const btn = document.createElement("button");
+    btn.className = "proj-pill";
+    btn.innerHTML = `${p} <span class="pill-count">—</span>`;
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".proj-pill").forEach(x => x.classList.remove("active"));
+      if (activeProject === p) { activeProject = "all"; }
+      else { activeProject = p; btn.classList.add("active"); }
+      renderCards();
+      document.getElementById("resources").scrollIntoView({behavior:"smooth"});
+    });
+    pills.appendChild(btn);
+  });
+}
+
+// ── STAT BAR COUNTS ──────────────────────────────────────────
+function updateStats() {
+  const total = allMaterials.length;
+  const beg   = allMaterials.filter(m => m.skillQ === "Q26").length;
+  const int_  = allMaterials.filter(m => m.skillQ === "Q27").length;
+  const adv   = allMaterials.filter(m => m.skillQ === "Q28").length;
+  const wla   = allMaterials.filter(m => m.campQ  === "Q4").length;
+  const rev   = allMaterials.filter(m => m.review === "Reviewed").length;
+
+  document.getElementById("statTotal").textContent  = total;
+  document.getElementById("sbTotal").textContent     = total;
+  document.getElementById("sbBeginner").textContent  = beg;
+  document.getElementById("sbIntermediate").textContent = int_;
+  document.getElementById("sbAdvanced").textContent  = adv;
+  document.getElementById("sbWLA").textContent       = wla;
+  document.getElementById("sbReviewed").textContent  = rev;
+  document.getElementById("pathBeg").textContent     = beg;
+  document.getElementById("pathInt").textContent     = int_;
+  document.getElementById("pathAdv").textContent     = adv;
+}
+
+// ── SKILL FILTER (from path buttons) ─────────────────────────
+function filterSkill(q) {
+  activeSkill = q;
+  document.querySelectorAll("[data-skill]").forEach(c => c.classList.toggle("active", c.dataset.skill === q));
+  renderCards();
+  document.getElementById("resources").scrollIntoView({behavior:"smooth"});
+}
+
+// ── EVENT LISTENERS ───────────────────────────────────────────
+document.getElementById("searchInput").addEventListener("input", e => {
+  searchQ = e.target.value;
+  document.getElementById("clearBtn").style.display = searchQ ? "block" : "none";
+  renderCards();
+});
+document.getElementById("clearBtn").addEventListener("click", () => {
+  searchQ = ""; document.getElementById("searchInput").value = "";
+  document.getElementById("clearBtn").style.display = "none";
+  renderCards();
+});
+document.querySelectorAll("[data-skill]").forEach(btn => {
+  btn.addEventListener("click", () => { filterSkill(btn.dataset.skill); });
+});
+document.getElementById("campaignFilter").addEventListener("change", e => {
+  activeCampaign = e.target.value;
+  document.querySelectorAll(".camp-card").forEach(c => c.classList.remove("active"));
+  renderCards();
+});
+document.getElementById("formatFilter").addEventListener("change", e => {
+  activeFormat = e.target.value; renderCards();
+});
+document.getElementById("gridBtn").addEventListener("click", () => {
+  isListView = false;
+  document.getElementById("cardsContainer").classList.remove("list-view");
+  document.getElementById("gridBtn").classList.add("active");
+  document.getElementById("listBtn").classList.remove("active");
+});
+document.getElementById("listBtn").addEventListener("click", () => {
+  isListView = true;
+  document.getElementById("cardsContainer").classList.add("list-view");
+  document.getElementById("listBtn").classList.add("active");
+  document.getElementById("gridBtn").classList.remove("active");
+});
+
+// ── INIT ──────────────────────────────────────────────────────
+(async () => {
+  try {
+    allMaterials = await loadMaterials();
+    document.querySelector(".loading").remove();
+    updateStats();
+    renderCampaigns();
+    renderProjectPills();
+    renderCards();
+  } catch(err) {
+    document.querySelector(".loading").innerHTML =
+      `<div style="color:#DC2626">⚠ Could not load from Wikibase.<br><small>${err.message}</small><br><br>Make sure you are viewing this page from wikiinafrica.wikibase.cloud</div>`;
+  }
+})();
+</script>
+</body>
+</html>
