@@ -15,7 +15,6 @@
   --green:   #5ab43c;
   --purple:  #784c99;
   --pink:    #ff3c82;
-
   /* neutrals derived to sit alongside the brand set */
   --ink:     #1E1710;
   --ink-2:   #2C2318;
@@ -24,7 +23,6 @@
   --line:    #E4DBC4;
   --stone:   #8A7F6B;
   --stone-2: #C9BFAA;
-
   --lt-orange: #FFE9C4;
   --lt-purple: #EBE0F2;
   --lt-green:  #DEF0D9;
@@ -35,7 +33,6 @@
 body { font-family: 'Inter', sans-serif; color: var(--ink); background: var(--cream); overflow-x: hidden; }
 a { text-decoration: none; color: inherit; }
 ::selection { background: var(--orange); color: var(--ink); }
-
 /* ── SIGNATURE: kente stripe — the six brand colours in one band ── */
 .kente { height: 6px; display: flex; }
 .kente span { flex: 1; }
@@ -45,7 +42,6 @@ a { text-decoration: none; color: inherit; }
 .kente span:nth-child(4){ background: var(--green); }
 .kente span:nth-child(5){ background: var(--purple); }
 .kente span:nth-child(6){ background: var(--pink); }
-
 /* NAV */
 nav {
   position: sticky; top: 6px; z-index: 100;
@@ -63,7 +59,6 @@ nav {
 .nav-links a { color: #D8CDB8; font-size: .78rem; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; transition: color .2s; }
 .nav-links a:hover { color: var(--pink); }
 .nav-tag { background: var(--purple); color: var(--cream); font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 500; padding: 4px 10px; border-radius: 4px; letter-spacing: .04em; }
-
 /* HERO */
 .hero { background: var(--ink); padding: 68px 32px 0; position: relative; overflow: hidden; }
 .hero-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: start; padding-bottom: 56px; }
@@ -77,7 +72,6 @@ nav {
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,150,0,.3); }
 .btn-ghost { background: transparent; color: var(--cream); font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: .88rem; padding: 12px 24px; border-radius: 8px; border: 1.5px solid #4A4030; cursor: pointer; transition: all .2s; display: inline-block; }
 .btn-ghost:hover { border-color: var(--pink); color: var(--pink); }
-
 .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: #3A3021; border: 1px solid #3A3021; border-radius: 14px; overflow: hidden; }
 .stat-box { background: var(--ink-2); padding: 20px 22px; }
 .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2.1rem; font-weight: 800; color: var(--cream); line-height: 1; margin-bottom: 5px; }
@@ -86,7 +80,6 @@ nav {
 .stat-box:nth-child(3) .stat-num { color: var(--green); }
 .stat-box:nth-child(4) .stat-num { color: var(--sand); }
 .stat-label { font-size: .68rem; font-weight: 500; color: #A79C86; letter-spacing: .07em; text-transform: uppercase; }
-
 /* STAT BAR */
 .stat-bar { background: var(--ink-2); }
 .stat-bar-inner { max-width: 1120px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-around; flex-wrap: wrap; }
@@ -94,7 +87,6 @@ nav {
 .sbi-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--cream); line-height: 1; }
 .sbi-label { font-size: .66rem; font-weight: 500; color: #93876F; letter-spacing: .06em; text-transform: uppercase; text-align: center; }
 .sbi-divider { width: 1px; background: #3A3021; margin: 12px 0; align-self: stretch; }
-
 /* SEARCH SECTION */
 .search-section { background: var(--paper); padding: 46px 32px; border-bottom: 1px solid var(--line); }
 .search-section-inner { max-width: 1120px; margin: 0 auto; }
@@ -114,7 +106,6 @@ nav {
 .chip.active { background: var(--ink); border-color: var(--ink); color: var(--cream); }
 .fselect { background: var(--cream); border: 1.5px solid var(--line); color: var(--stone); font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 500; padding: 6px 14px; border-radius: 20px; cursor: pointer; outline: none; transition: border-color .2s; }
 .fselect:focus { border-color: var(--orange); }
-
 /* RESULTS META */
 .results-meta { max-width: 1120px; margin: 0 auto; padding: 20px 32px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
 .results-count { font-size: .82rem; color: var(--stone); }
@@ -122,12 +113,10 @@ nav {
 .view-toggle { display: flex; gap: 4px; }
 .view-btn { background: none; border: 1.5px solid var(--line); color: var(--stone); padding: 5px 9px; border-radius: 6px; cursor: pointer; font-size: .82rem; transition: all .15s; }
 .view-btn.active { background: var(--ink); border-color: var(--ink); color: var(--cream); }
-
 /* LOADING */
 .loading { text-align: center; padding: 48px; color: var(--stone); font-size: .9rem; grid-column: 1/-1; }
 .spinner { width: 34px; height: 34px; border: 3px solid var(--line); border-top-color: var(--orange); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 12px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
 /* CARDS */
 #cardsContainer { max-width: 1120px; margin: 0 auto; padding: 22px 32px 52px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
 #cardsContainer.list-view { grid-template-columns: 1fr; }
@@ -143,18 +132,17 @@ nav {
 .badge-advanced     { background: var(--lt-purple); color: var(--purple); }
 .badge-format       { background: var(--paper); color: var(--stone); }
 .badge-lang         { background: var(--lt-pink); color: #B3195A; }
+.badge-topic        { background: #E6EEFF; color: #2547B3; }
 .card-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: .92rem; color: var(--ink); line-height: 1.35; }
 .card-meta  { font-size: .75rem; color: var(--stone); }
 .card-footer { padding: 10px 18px 14px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--paper); }
 .card-campaign { font-size: .66rem; font-weight: 700; color: var(--stone); letter-spacing: .04em; text-transform: uppercase; }
 .card-link { font-size: .76rem; font-weight: 600; color: var(--purple); display: flex; align-items: center; gap: 3px; transition: color .15s; }
 .card-link:hover { color: var(--pink); }
-
 /* EMPTY STATE */
 #emptyState { display: none; grid-column: 1/-1; text-align: center; padding: 56px 20px; }
 #emptyState .ei { font-size: 2.5rem; margin-bottom: 10px; }
 #emptyState p { color: var(--stone); font-size: .9rem; }
-
 /* CAMPAIGNS */
 .campaigns-section { background: var(--ink); padding: 56px 32px; }
 .campaigns-inner { max-width: 1120px; margin: 0 auto; }
@@ -167,7 +155,6 @@ nav {
 .camp-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .82rem; color: var(--cream); line-height: 1.3; }
 .camp-count { font-size: .72rem; color: #93876F; }
 .camp-count span { font-weight: 700; color: var(--orange); }
-
 /* SKILL PATHS */
 .paths-section { padding: 56px 32px; background: var(--cream); }
 .paths-inner { max-width: 1120px; margin: 0 auto; }
@@ -192,7 +179,6 @@ nav {
 .intermediate .path-btn { background: var(--orange); color: var(--ink); }
 .advanced .path-btn     { background: var(--purple); color: var(--cream); }
 .path-btn:hover { transform: translateX(3px); }
-
 /* PROJECTS BAR */
 .projects-section { background: var(--purple); padding: 38px 32px; }
 .projects-inner { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
@@ -203,7 +189,6 @@ nav {
 .proj-pill:hover, .proj-pill.active { background: var(--pink); border-color: var(--pink); color: var(--ink); }
 .pill-count { background: rgba(255,255,255,.18); border-radius: 20px; font-size: .66rem; font-weight: 700; padding: 1px 7px; }
 .proj-pill.active .pill-count { background: rgba(30,23,16,.15); }
-
 /* SPARQL INFO */
 .sparql-section { background: var(--paper); padding: 44px 32px; border-top: 1px solid var(--line); }
 .sparql-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 34px; align-items: center; }
@@ -212,13 +197,11 @@ nav {
 .sparql-link { display: inline-flex; align-items: center; gap: 6px; background: var(--ink); color: var(--cream); font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: .84rem; padding: 11px 20px; border-radius: 8px; transition: background .2s; }
 .sparql-link:hover { background: var(--purple); }
 pre.sparql-code { background: var(--ink); color: #8FE0C4; font-family: 'JetBrains Mono', monospace; font-size: .74rem; padding: 20px; border-radius: 10px; overflow-x: auto; line-height: 1.65; border: 1px solid #3A3021; }
-
 /* FOOTER */
 footer { background: var(--ink); color: #93876F; padding: 30px 32px; text-align: center; font-size: .78rem; line-height: 1.9; }
 footer a { color: var(--sand); }
 footer a:hover { color: var(--pink); }
 footer strong { color: var(--cream); font-family: 'Space Grotesk', sans-serif; }
-
 @media (max-width: 860px) {
   .hero-inner { grid-template-columns: 1fr; padding-bottom: 40px; }
   .paths-grid { grid-template-columns: 1fr; }
@@ -317,6 +300,9 @@ footer strong { color: var(--cream); font-family: 'Space Grotesk', sans-serif; }
       </select>
       <select class="fselect" id="languageFilter">
         <option value="all">All languages</option>
+      </select>
+      <select class="fselect" id="topicFilter">
+        <option value="all">All topics</option>
       </select>
     </div>
   </div>
@@ -451,6 +437,7 @@ let activeCampaign = "all";
 let activeFormat   = "all";
 let activeProject  = "all";
 let activeLanguage = "all";
+let activeTopic    = "all";
 let searchQ        = "";
 let isListView     = false;
 // ── SPARQL FETCH ──────────────────────────────────────────────
@@ -478,6 +465,11 @@ function splitList(str, sep) {
 // Instead, each multi-valued property gets its OWN small, isolated
 // GROUP_CONCAT subquery, LEFT-JOINed on ?item — cheap for the query engine,
 // and still guarantees exactly one output row per item.
+//
+// TOPIC/THEME (P10): may hold either a plain string or a reference to a
+// Wikibase item, so the label is resolved with a COALESCE the same way
+// languages already were — this makes P10 filterable by a stable, readable
+// label regardless of how it was entered.
 async function loadMaterials() {
   const q = `
 SELECT ?item ?itemLabel ?campQ ?campLabel
@@ -515,8 +507,12 @@ WHERE {
     GROUP BY ?item
   }
   OPTIONAL {
-    SELECT ?item (GROUP_CONCAT(DISTINCT ?topicVal; separator=" | ") AS ?topics)
-    WHERE { ?item wdt:P10 ?topicVal . }
+    SELECT ?item (GROUP_CONCAT(DISTINCT ?topicDisplay; separator=" | ") AS ?topics)
+    WHERE {
+      ?item wdt:P10 ?topicVal .
+      OPTIONAL { ?topicVal rdfs:label ?topicLbl . FILTER(LANG(?topicLbl)="en") }
+      BIND(COALESCE(?topicLbl, ?topicVal) AS ?topicDisplay)
+    }
     GROUP BY ?item
   }
   OPTIONAL {
@@ -552,6 +548,7 @@ ORDER BY ?campLabel ?itemLabel`;
     const projQs   = splitList(val(r,"projQs"), "|").map(u => u.split("/").pop());
     const projects = splitList(val(r,"projects"), " | ");
     const languages = splitList(val(r,"languages"), " | ");
+    const topics   = splitList(val(r,"topics"), " | ");
     const years    = splitList(val(r,"years"), " | ");
     const reviews  = splitList(val(r,"reviews"), " | ");
     const urls     = splitList(val(r,"urls"), " | ");
@@ -571,7 +568,8 @@ ORDER BY ?campLabel ?itemLabel`;
       projQs, projects,
       lang:     languages[0] || "",
       languages,
-      topic:    val(r,"topics"),
+      topic:    topics.join(", "),
+      topics,
       creator:  val(r,"creators"),
       url:      urls[0] || "",
       year:     (years[0] || "").substring(0,4),
@@ -588,6 +586,7 @@ function getFiltered() {
     if (activeFormat   !== "all" && !m.formats.includes(activeFormat))   return false;
     if (activeProject  !== "all" && !m.projects.includes(activeProject)) return false;
     if (activeLanguage !== "all" && !m.languages.includes(activeLanguage)) return false;
+    if (activeTopic    !== "all" && !m.topics.includes(activeTopic))     return false;
     if (q && ![m.title,m.topic,m.creator,m.formats.join(" "),m.camp,m.skills.join(" "),m.languages.join(" ")].join(" ").toLowerCase().includes(q)) return false;
     return true;
   });
@@ -612,6 +611,7 @@ function renderCards() {
           ${m.skill ? `<span class="badge ${skillClass}">${m.skill}</span>` : ""}
           ${m.format ? `<span class="badge badge-format">${m.format}</span>` : ""}
           ${m.lang ? `<span class="badge badge-lang">${m.lang}</span>` : ""}
+          ${m.topics.slice(0,2).map(t => `<span class="badge badge-topic">${t}</span>`).join("")}
         </div>
         <div class="card-title">${m.title || "Untitled"}</div>
         <div class="card-meta">${[m.topic, m.creator, m.year].filter(Boolean).join(" · ")}</div>
@@ -711,6 +711,21 @@ function populateLanguageFilter() {
 document.getElementById("languageFilter").addEventListener("change", e => {
   activeLanguage = e.target.value; renderCards();
 });
+// ── TOPIC FILTER (populated dynamically from data, property P10) ─────
+function populateTopicFilter() {
+  const topics = new Set();
+  allMaterials.forEach(m => m.topics.forEach(t => topics.add(t)));
+  const select = document.getElementById("topicFilter");
+  [...topics].sort().forEach(t => {
+    const opt = document.createElement("option");
+    opt.value = t;
+    opt.textContent = t;
+    select.appendChild(opt);
+  });
+}
+document.getElementById("topicFilter").addEventListener("change", e => {
+  activeTopic = e.target.value; renderCards();
+});
 // ── SKILL FILTER (from path buttons) ─────────────────────────
 function filterSkill(q) {
   activeSkill = q;
@@ -761,6 +776,7 @@ document.getElementById("listBtn").addEventListener("click", () => {
     renderCampaigns();
     renderProjectPills();
     populateLanguageFilter();
+    populateTopicFilter();
     renderCards();
   } catch(err) {
     document.querySelector(".loading").innerHTML =
